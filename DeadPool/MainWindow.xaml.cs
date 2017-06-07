@@ -25,6 +25,11 @@ namespace DeadPool
     public partial class MainWindow : Window
     {
         DispatcherTimer t1;
+        Ahorcado ahorcado;
+
+        public void IntroducirNombre() {
+            
+        }
         public MainWindow()
         {
             InitializeComponent();
@@ -39,10 +44,10 @@ namespace DeadPool
             t1.Start();
             Pizza_icon50_png.Visibility = Visibility.Hidden;
             Pizza_icon10_png.Visibility = Visibility.Hidden;
-            Pizza_icon_png.Visibility = Visibility.Hidden;
+            Pizza_icon_png.Visibility = Visibility.Visible;
             balon_10_png.Visibility = Visibility.Hidden;
             balon_50_png.Visibility = Visibility.Hidden;
-            balon_png.Visibility = Visibility.Hidden;
+            balon_png.Visibility = Visibility.Visible;
             dormir10_png.Visibility = Visibility.Hidden;
             dormir50_png.Visibility = Visibility.Hidden;
             dormir_png.Visibility = Visibility.Hidden;
@@ -53,7 +58,7 @@ namespace DeadPool
         private void reloj(object sender, EventArgs e)
         {
             pgb_Diversion.Value -= 5.0;
-            pgb_Energia.Value -= 5.0;
+            pgb_Energia.Value -= 1.0;
             pgb_Hambre.Value -= 5.0;
             
             Storyboard hambriento;
@@ -123,15 +128,29 @@ namespace DeadPool
 
         private void btnComer_Click(object sender, RoutedEventArgs e)
         {
-            pgb_Hambre.Value += 20.0;
-            Accion_comer();
+            if (pgb_Hambre.Value <= 50) {
+                pgb_Hambre.Value += 100.0;
+                
+                Accion_comer();
+            }
+
+           
         }
 
         private void btnJugar_Click(object sender, RoutedEventArgs e)
         {
-            pgb_Diversion.Value += 20.0;
-            Ahorcado ahorcado = new Ahorcado();
+            btnComer.IsHitTestVisible = false;
+            btnJugar.IsHitTestVisible = false;
+            btnDormir.IsHitTestVisible = false;
+            t1.Stop();
+            ahorcado = new Ahorcado(this.btnComer,this.btnDormir,this.btnJugar,this.t1, this.pgb_Diversion);
             ahorcado.Show();
+
+            /* btnComer.IsHitTestVisible = true;
+             btnJugar.IsHitTestVisible = true;
+             btnDormir.IsHitTestVisible = true;*/
+            
+
         }
 
         private void btnDormir_Click(object sender, RoutedEventArgs e)
@@ -170,38 +189,34 @@ namespace DeadPool
         SoundPlayer Comer;
         private void Accion_comer()
         {
-            
+            btnComer.IsHitTestVisible = false;
+            btnJugar.IsHitTestVisible = false;
+            btnDormir.IsHitTestVisible = false;
             Storyboard comiendo;
             comiendo = (Storyboard)this.Resources["Comiendo"];
+            comiendo.Completed += Animacion_Completed;
             Comer = new SoundPlayer(@"..\..\eat.wav");
             //espada.Begin();
             comiendo.Begin();
             Comer.Play();
-            /*try
-            {
-                Comer = new SoundPlayer(@"C:\Users\Jesus\Documents\DeadPool\DeadPool\eat.wav");
-            }
-            catch (Exception e) {
-                MessageBox.Show("Error: " + e);
-            }*/
+           
+
         }
+        
         SoundPlayer Dormir;
         private void Accion_Dormir()
         {
-
+            btnComer.IsHitTestVisible = false;
+            btnJugar.IsHitTestVisible = false;
+            btnDormir.IsHitTestVisible = false;
             Storyboard durmiendo;
             durmiendo = (Storyboard)this.Resources["Dormir"];
+            durmiendo.Completed += Animacion_Completed;
             Dormir = new SoundPlayer(@"..\..\snore.wav");
             //espada.Begin();
             durmiendo.Begin();
             Dormir.Play();
-            /*try
-            {
-                Comer = new SoundPlayer(@"C:\Users\Jesus\Documents\DeadPool\DeadPool\eat.wav");
-            }
-            catch (Exception e) {
-                MessageBox.Show("Error: " + e);
-            }*/
+            
         }
 
         private void cargarProgressBar()
@@ -228,6 +243,7 @@ namespace DeadPool
                     }
                 }
             }
+            myXMLreader.Close();
         }
 
 
@@ -246,6 +262,22 @@ namespace DeadPool
                 writer.Flush();
                 // writer.Close();
             }
+
+            try
+            {
+                ahorcado.Close();
+            }
+            catch (Exception exc)
+            {
+
+            }
+           
+        }
+        private void Animacion_Completed(object sender, EventArgs e)
+        {
+            btnComer.IsHitTestVisible = true;
+            btnJugar.IsHitTestVisible = true;
+            btnDormir.IsHitTestVisible = true;
         }
 
     }

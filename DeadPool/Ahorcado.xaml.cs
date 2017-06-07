@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using System.Xml;
 
 namespace DeadPool
@@ -26,8 +27,11 @@ namespace DeadPool
         int fallos;
         int segundos;
         System.Windows.Threading.DispatcherTimer myDispatcherTimer;
+        Button   comer, dormir, jugar;
+        DispatcherTimer t1;
+        ProgressBar pb;
 
-        public Ahorcado()
+        public Ahorcado(Button b1, Button b2, Button b3, DispatcherTimer t1, ProgressBar pb)
         {
             InitializeComponent();
             textBox.Focus();
@@ -35,12 +39,16 @@ namespace DeadPool
             fallos = 0;
             randomSuperHero();
             rayasNombre();
+            this.pb = pb;
 
             myDispatcherTimer = new System.Windows.Threading.DispatcherTimer();
             myDispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 1000); // 100 Milliseconds 
             myDispatcherTimer.Tick += new EventHandler(Each_Tick);
             myDispatcherTimer.Start();
-
+            comer = b1;
+            dormir = b2;
+            jugar = b3;
+            this.t1 = t1;
         }
 
         private void randomSuperHero()
@@ -203,9 +211,17 @@ namespace DeadPool
             return true;
         }
 
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            comer.IsHitTestVisible = true;
+            dormir.IsHitTestVisible = true;
+            jugar.IsHitTestVisible = true;
+            t1.Start();
+        }
+
         private void Each_Tick(object o, EventArgs sender)
         {
-            label1.Content = "Segundos pasados: " + segundos++.ToString();
+            label1.Content = "Segundos pasados: " + segundos++.ToString("mm:ss");
         }
 
         private int calculapuntos()
@@ -254,11 +270,13 @@ namespace DeadPool
 
             myDispatcherTimer.Stop();
             label1.Content = "Has tardado "+segundos+" segundos y has ganado "+puntos+" puntos";
+            pb.Value+=puntos;
             return puntos;
 
-        }       
+        }
 
 
     }
-    
+  
+
 }
