@@ -8,9 +8,9 @@
         xmlns:ed="http://schemas.microsoft.com/expression/2010/drawing" x:Class="DeadPool.MainWindow"
         mc:Ignorable="d"
         Title="DeadPool" ResizeMode="NoResize" ShowInTaskbar="true" 
-        Height="{DynamicResource {x:Static SystemParameters.MaximizedPrimaryScreenHeightKey}}" 
-        Width="{DynamicResource {x:Static SystemParameters.MaximizedPrimaryScreenWidthKey}}"
-        WindowStartupLocation="CenterScreen" WindowStyle="SingleBorderWindow" MaxWidth="1366" MaxHeight="768" MinWidth="1366" MinHeight="768">
+        Height="712" 
+        Width="1324"
+        WindowStartupLocation="CenterScreen" WindowStyle="SingleBorderWindow" MaxWidth="1366" MaxHeight="758" MinWidth="1366" MinHeight="758 ">
     <Window.Resources>
         <Storyboard x:Key="Espada" AutoReverse="True" RepeatBehavior="1x">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)" Storyboard.TargetName="cv_BrazoDer">
@@ -738,7 +738,7 @@
     <Window.Background>
         <ImageBrush ImageSource="deadpool-references-25.jpg" Stretch="UniformToFill"/>
     </Window.Background>
-    <Grid x:Name="gr_Escenario" OpacityMask="Black" >
+    <Grid x:Name="gr_Escenario" OpacityMask="Black" d:LayoutOverrides="LeftPosition, RightPosition, TopPosition, BottomPosition" >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="53*"/>
             <ColumnDefinition Width="1491*"/>
@@ -1178,7 +1178,13 @@
                 </Image.RenderTransform>
             </Image>
         </Canvas>
-        <Grid Grid.ColumnSpan="2" Margin="0,4,0,10"/>
+
+
+        <Grid Margin="0,4" Grid.ColumnSpan="2">
+            <Canvas x:Name="Canvas_Inicio" Margin="0,-20,10,0" Background="#FFF91C1C">
+                <Button x:Name="Inicio" Content="INICIO&#xD;&#xA;" Height="72" Canvas.Left="249" Canvas.Top="282" Width="150" Click="button_Click"/>
+            </Canvas>
+        </Grid>
 
 
     </Grid>

@@ -189,6 +189,15 @@
   <ItemGroup>
     <Resource Include="deadpool_approbes.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\introMusic.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\eat.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\snore.wav" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

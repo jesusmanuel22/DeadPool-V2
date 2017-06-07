@@ -16,6 +16,7 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using System.Media;
 using System.Xml;
+using System.Threading;
 
 namespace DeadPool
 {
@@ -26,34 +27,28 @@ namespace DeadPool
     {
         DispatcherTimer t1;
         Ahorcado ahorcado;
-
+        private System.Media.SoundPlayer sonido = new System.Media.SoundPlayer { };
+        private System.Media.SoundPlayer efectos = new System.Media.SoundPlayer { };
+        
         public void IntroducirNombre() {
             
         }
         public MainWindow()
         {
+           
             InitializeComponent();
 
-            cargarProgressBar();
+            //IntroMusic = new SoundPlayer(@"..\..\introMusic.wav");
+             /*sonido.Stream = Properties.Resources.introMusic;
+               sonido.Play();*/
+            var p1 = new System.Windows.Media.MediaPlayer();
+            p1.Open(new System.Uri(@"C:\Users\Jesus\Documents\DeadPool V2\DeadPool\Resources\introMusic.wav"));
+            p1.Play();
 
-            t1 = new DispatcherTimer();
-            t1.Interval = TimeSpan.FromSeconds(3.0);
-            t1.Tick += new EventHandler(reloj);
-            
-            
-            t1.Start();
-            Pizza_icon50_png.Visibility = Visibility.Hidden;
-            Pizza_icon10_png.Visibility = Visibility.Hidden;
-            Pizza_icon_png.Visibility = Visibility.Visible;
-            balon_10_png.Visibility = Visibility.Hidden;
-            balon_50_png.Visibility = Visibility.Hidden;
-            balon_png.Visibility = Visibility.Visible;
-            dormir10_png.Visibility = Visibility.Hidden;
-            dormir50_png.Visibility = Visibility.Hidden;
-            dormir_png.Visibility = Visibility.Hidden;
-
-            
         }
+
+       
+        
 
         private void reloj(object sender, EventArgs e)
         {
@@ -155,7 +150,7 @@ namespace DeadPool
 
         private void btnDormir_Click(object sender, RoutedEventArgs e)
         {
-            pgb_Energia.Value += 20.0;
+            pgb_Energia.Value += 35.0;
             Accion_Dormir();
         }
 
@@ -179,14 +174,19 @@ namespace DeadPool
 
         private void Rectangle_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            Storyboard espada;
+            btnComer.IsHitTestVisible = false;
+            btnJugar.IsHitTestVisible = false;
+            btnDormir.IsHitTestVisible = false;
+            /*Storyboard espada;
             espada = (Storyboard)this.Resources["Espada"];
+            espada.Completed += Animacion_Completed;*/
             Storyboard enfadado;
             enfadado = (Storyboard)this.Resources["EspadaEnfado"];
-           //espada.Begin();
-            enfadado.Begin();
+            enfadado.Completed += Animacion_Completed;
+            //espada.Begin();
+           // enfadado.Begin();
+
         }
-        SoundPlayer Comer;
         private void Accion_comer()
         {
             btnComer.IsHitTestVisible = false;
@@ -195,15 +195,15 @@ namespace DeadPool
             Storyboard comiendo;
             comiendo = (Storyboard)this.Resources["Comiendo"];
             comiendo.Completed += Animacion_Completed;
-            Comer = new SoundPlayer(@"..\..\eat.wav");
+            efectos.Stream = Properties.Resources.eat;
             //espada.Begin();
             comiendo.Begin();
-            Comer.Play();
-           
+            efectos.Play();
+            
 
         }
         
-        SoundPlayer Dormir;
+
         private void Accion_Dormir()
         {
             btnComer.IsHitTestVisible = false;
@@ -212,12 +212,20 @@ namespace DeadPool
             Storyboard durmiendo;
             durmiendo = (Storyboard)this.Resources["Dormir"];
             durmiendo.Completed += Animacion_Completed;
-            Dormir = new SoundPlayer(@"..\..\snore.wav");
+            efectos.Stream = Properties.Resources.snore;
             //espada.Begin();
             durmiendo.Begin();
-            Dormir.Play();
-            
+            var p1 = new System.Windows.Media.MediaPlayer();
+            p1.Open(new System.Uri(@"C:\Users\Jesus\Documents\DeadPool V2\DeadPool\Resources\snore.wav"));
+            p1.Play();
+            /*ThreadStart delegado = new ThreadStart(inicEfectos);
+            Thread hilo = new Thread(delegado);
+            hilo.Start();*/
+
         }
+        /*public void inicEfectos() {
+            efectos.Play();
+        }*/
 
         private void cargarProgressBar()
         {
@@ -280,5 +288,27 @@ namespace DeadPool
             btnDormir.IsHitTestVisible = true;
         }
 
+        private void button_Click(object sender, RoutedEventArgs e)
+        {
+            
+            Canvas_Inicio.Visibility = Visibility.Collapsed;
+            cargarProgressBar();
+
+            t1 = new DispatcherTimer();
+            t1.Interval = TimeSpan.FromSeconds(3.0);
+            t1.Tick += new EventHandler(reloj);
+
+
+            t1.Start();
+            Pizza_icon50_png.Visibility = Visibility.Hidden;
+            Pizza_icon10_png.Visibility = Visibility.Hidden;
+            Pizza_icon_png.Visibility = Visibility.Visible;
+            balon_10_png.Visibility = Visibility.Hidden;
+            balon_50_png.Visibility = Visibility.Hidden;
+            balon_png.Visibility = Visibility.Visible;
+            dormir10_png.Visibility = Visibility.Hidden;
+            dormir50_png.Visibility = Visibility.Hidden;
+            dormir_png.Visibility = Visibility.Hidden;
+        }
     }
 }

@@ -68,5 +68,32 @@ namespace DeadPool.Properties {
                 return ResourceManager.GetStream("eat", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.IO.UnmanagedMemoryStream similar a System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream eat1 {
+            get {
+                return ResourceManager.GetStream("eat1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.IO.UnmanagedMemoryStream similar a System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream introMusic {
+            get {
+                return ResourceManager.GetStream("introMusic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.IO.UnmanagedMemoryStream similar a System.IO.MemoryStream.
+        /// </summary>
+        internal static System.IO.UnmanagedMemoryStream snore {
+            get {
+                return ResourceManager.GetStream("snore", resourceCulture);
+            }
+        }
     }
 }
