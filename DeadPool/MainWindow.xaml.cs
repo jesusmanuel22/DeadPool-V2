@@ -17,6 +17,7 @@ using System.Windows.Threading;
 using System.Media;
 using System.Xml;
 using System.Threading;
+using System.IO;
 
 namespace DeadPool
 {
@@ -31,6 +32,7 @@ namespace DeadPool
         private MediaPlayer efectos;
         private MediaPlayer disparos;
         private MediaPlayer katanas;
+        private MediaPlayer instrumentales;
         public void IntroducirNombre() {
             
         }
@@ -39,17 +41,16 @@ namespace DeadPool
            
             InitializeComponent();
             MessageBox.Show("AVISO, esta aplicación contiene música, para proteger su integridad auditiva le rogamos que baje el volumen y suba progresivamente hasta donde usted vea conveniente\n Muchas gracias\n ¡¡CHIMICHANGAS!!", "ALERT!!", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-            
 
+            cargarImagenAleatoriaInicio();
             inic_App();
             cv_AboutUs.Visibility = Visibility.Collapsed;
+            instrumentales = new MediaPlayer();
         }
         private void inic_App() {
             sonido = new MediaPlayer();
             sonido.Volume = 0.01;
             efectos = new MediaPlayer();
-
-
             sonido.Open(new Uri(System.IO.Directory.GetCurrentDirectory() + "\\..\\..\\Resources\\introMusic.wav"));
             sonido.MediaEnded += new EventHandler(Media_Ended);
             sonido.Play();
@@ -151,10 +152,6 @@ namespace DeadPool
             t1.Stop();
             ahorcado = new Ahorcado(this.btnComer,this.btnDormir,this.btnJugar,this.t1, this.pgb_Diversion);
             ahorcado.Show();
-
-            /* btnComer.IsHitTestVisible = true;
-             btnJugar.IsHitTestVisible = true;
-             btnDormir.IsHitTestVisible = true;*/
             
 
         }
@@ -206,6 +203,7 @@ namespace DeadPool
             comiendo.Completed += Animacion_Completed;
             comiendo.Begin();
             efectos.Open(new Uri(System.IO.Directory.GetCurrentDirectory() + "\\..\\..\\Resources\\eat.wav"));
+            efectos.Volume = 0.5;
             efectos.Play();
         }
         
@@ -219,7 +217,7 @@ namespace DeadPool
             durmiendo = (Storyboard)this.Resources["Dormir"];
             durmiendo.Completed += Animacion_Completed;
             efectos.Open(new Uri(System.IO.Directory.GetCurrentDirectory() + "\\..\\..\\Resources\\snore.wav"));
-            efectos.Volume = 0.02;
+            efectos.Volume = 0.5;
             efectos.Play();
             durmiendo.Begin();
            
@@ -301,6 +299,7 @@ namespace DeadPool
             disparos.Open(new Uri(System.IO.Directory.GetCurrentDirectory() + "\\..\\..\\Resources\\disparo.wav"));
             disparos.Volume = 0.01;
             disparos.Play();
+            sonido.Stop();
             disparo.Begin();
             
         }
@@ -309,6 +308,13 @@ namespace DeadPool
             Canvas_Inicio.Visibility = Visibility.Collapsed;
             cargarProgressBar();
 
+
+            instrumentales.Open(new Uri(System.IO.Directory.GetCurrentDirectory() + "\\..\\..\\Resources\\instrumental.wav"));
+            instrumentales.MediaEnded += new EventHandler(Media_Ended2);
+            instrumentales.Play();
+        
+
+        
             t1 = new DispatcherTimer();
             t1.Interval = TimeSpan.FromSeconds(3.0);
             t1.Tick += new EventHandler(reloj);
@@ -325,9 +331,20 @@ namespace DeadPool
             dormir50_png.Visibility = Visibility.Hidden;
             dormir_png.Visibility = Visibility.Hidden;
         }
-
-        private void disparo_NuevaPartida(object sender, RoutedEventArgs e)
+    private void Media_Ended2(object sender, EventArgs e)
+    {
+        instrumentales.Open(new Uri(System.IO.Directory.GetCurrentDirectory() + "\\..\\..\\Resources\\instrumental.wav"));
+        instrumentales.Play();
+    }
+    private void disparo_NuevaPartida(object sender, RoutedEventArgs e)
         {
+            instrumentales = new MediaPlayer();
+            instrumentales.Volume = 0.1;
+
+
+            instrumentales.Open(new Uri(System.IO.Directory.GetCurrentDirectory() + "\\..\\..\\Resources\\instrumental.wav"));
+            instrumentales.MediaEnded += new EventHandler(Media_Ended2);
+            instrumentales.Play();
             Storyboard disparo = (Storyboard)this.Resources["DisparoIzq"];
 
             disparo.Completed += DisparoIzq_Completed;
@@ -335,6 +352,7 @@ namespace DeadPool
             disparos.Open(new Uri(System.IO.Directory.GetCurrentDirectory() + "\\..\\..\\Resources\\disparo.wav"));
             disparos.Volume = 0.01;
             disparos.Play();
+            sonido.Stop();
             disparo.Begin();
             
 
@@ -385,6 +403,32 @@ namespace DeadPool
         {
             cv_AboutUs.Visibility = Visibility.Collapsed;
             Canvas_Inicio.Visibility = Visibility.Visible;
+            cargarImagenAleatoriaInicio();
+        }
+        private void cargarImagenAleatoriaInicio()
+        {
+            String[] imagenes = {
+                "ahorcado_Cabeza.png",
+                "ahorcado_Completo.png",
+                "ahorcado_Cuerpo.png",};
+            Random num = new Random();
+            int numero = num.Next(0, imagenes.Length);
+            img_introDeadPool.Source = new BitmapImage(new Uri(imagenes[numero], UriKind.Relative));
+
+        }
+
+        private void btn_Sonido_Click(object sender, RoutedEventArgs e)
+        {
+            if (sonido.Volume != 0 || instrumentales.Volume !=0)
+            {
+                sonido.Volume = 0;
+                instrumentales.Volume = 0;
+            }
+            else {
+                sonido.Volume = 0.01;
+                instrumentales.Volume = 0.01;
+
+            }
         }
     }
 }

@@ -1209,7 +1209,7 @@
                 </Image.RenderTransform>
             </Image>
         </Canvas>
-        <Canvas x:Name="cv_AboutUs" Grid.ColumnSpan="2">
+        <Canvas x:Name="cv_AboutUs" Grid.ColumnSpan="2" d:IsHidden="True">
             <Canvas.Background>
                 <ImageBrush ImageSource="sobrenosotroswp.jpg" Stretch="None"/>
             </Canvas.Background>
@@ -1240,7 +1240,6 @@
                     <Image x:Name="deserteagle_png" Height="312.907" Source="deserteagle.png" Stretch="Fill" Width="417" Canvas.Top="30"/>
                     <Image x:Name="diparo_png" Height="149.25" Canvas.Left="362" Source="diparo.png" Stretch="Fill" Canvas.Top="40" Width="199" Visibility="Hidden"/>
                 </Canvas>
-                <Canvas x:Name="cv_introDeadPool" Height="518" Canvas.Left="661" Canvas.Top="192.062" Width="699"/>
                 <Image x:Name="katana1_png" Height="62" Canvas.Left="10" Source="katana1.png" Stretch="Fill" Canvas.Top="617.729" Width="592.667" RenderTransformOrigin="0.5,0.5">
                     <Image.RenderTransform>
                         <TransformGroup>
@@ -1260,6 +1259,7 @@
                             <TranslateTransform/>
                         </TransformGroup>
                     </Canvas.RenderTransform>
+                    <Image x:Name="img_introDeadPool" Height="537.005" Canvas.Left="792.2" Canvas.Top="90.724" Width="454.4"/>
                     <Image x:Name="deserteagleizq_png" Height="311.604" Canvas.Left="109.333" Source="deserteagleizq.png" Stretch="Fill" Width="415.262"/>
                     <Image x:Name="diparo_png_Copy" Height="149.25" Source="diparo.png" Stretch="Fill" Canvas.Top="8.604" Width="164" RenderTransformOrigin="0.5,0.5" Visibility="Hidden">
                         <Image.RenderTransform>
@@ -1276,6 +1276,11 @@
                 <Button x:Name="btn_AboutUs" Content="Sobre Nosotros" Height="76.062" Canvas.Left="141" Canvas.Top="551.667" Width="386.262" Click="AboutUs_Click" FontSize="48" Background="{x:Null}"/>
                 <Button x:Name="btn_Continue" Content="Continuar" Height="76.062" Canvas.Left="147" Canvas.Top="432" Width="280" Click="button_Click" FontSize="48" Background="{x:Null}"/>
                 <Canvas x:Name="cvFrases" Height="120" Canvas.Left="660" Canvas.Top="25.062" Width="694"/>
+                <Button x:Name="btn_Sonido" Content="" Height="57" Canvas.Left="1297" Canvas.Top="622.729" Width="57" ToolTip="Activar sonido" Click="btn_Sonido_Click">
+                    <Button.Background>
+                        <ImageBrush ImageSource="mute.png"/>
+                    </Button.Background>
+                </Button>
             </Canvas>
         </Grid>
 
