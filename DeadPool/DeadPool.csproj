@@ -37,6 +37,7 @@
     <Reference Include="Microsoft.Expression.Drawing, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -197,6 +198,33 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\snore.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Images\deserteagle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="deserteagle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="deserteagleizq.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="katana.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="katana1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="diparo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="357_shot2.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="disparo.wav" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="sobrenosotroswp.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

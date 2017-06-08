@@ -3,14 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:DeadPool"
+        xmlns:local="clr-namespace:DeadPool" x:Name="Ventana_Principal"
         Closing="Window_Closing"
         xmlns:ed="http://schemas.microsoft.com/expression/2010/drawing" x:Class="DeadPool.MainWindow"
         mc:Ignorable="d"
         Title="DeadPool" ResizeMode="NoResize" ShowInTaskbar="true" 
         Height="712" 
         Width="1324"
-        WindowStartupLocation="CenterScreen" WindowStyle="SingleBorderWindow" MaxWidth="1366" MaxHeight="758" MinWidth="1366" MinHeight="758 ">
+        WindowStartupLocation="CenterScreen" WindowStyle="SingleBorderWindow" MaxWidth="1370" MaxHeight="750" MinWidth="1370" MinHeight="750 ">
     <Window.Resources>
         <Storyboard x:Key="Espada" AutoReverse="True" RepeatBehavior="1x">
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)" Storyboard.TargetName="cv_BrazoDer">
@@ -726,13 +726,44 @@
                 <EasingDoubleKeyFrame KeyTime="0:0:2.4" Value="24.189"/>
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>
+        <Storyboard x:Key="DisparoIzq">
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="diparo_png_Copy">
+                <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Collapsed}"/>
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.1" Value="{x:Static Visibility.Visible}"/>
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.2" Value="{x:Static Visibility.Collapsed}"/>
+            </ObjectAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)" Storyboard.TargetName="cv_diparoNew">
+                <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="3.166"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="DisparoDer">
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="diparo_png">
+                <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Collapsed}"/>
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.1" Value="{x:Static Visibility.Visible}"/>
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.2" Value="{x:Static Visibility.Collapsed}"/>
+            </ObjectAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)" Storyboard.TargetName="cv_disparo_cont">
+                <EasingDoubleKeyFrame KeyTime="0:0:0.1" Value="-2.76"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="katana">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="katana1_png">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="-342"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)" Storyboard.TargetName="katana1_png">
+                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="6.647"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="0"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
     </Window.Resources>
     <Window.Triggers>
         <EventTrigger RoutedEvent="FrameworkElement.Loaded" SourceName="cv_Cabeza">
             <BeginStoryboard x:Name="Cabeza_BeginStoryboard" Storyboard="{StaticResource Cabeza}"/>
-        </EventTrigger>
-        <EventTrigger RoutedEvent="UIElement.MouseUp" SourceName="cv_Espada2">
-            <BeginStoryboard x:Name="Espada_BeginStoryboard" Storyboard="{StaticResource Espada}"/>
         </EventTrigger>
     </Window.Triggers>
     <Window.Background>
@@ -747,7 +778,7 @@
             <ImageBrush/>
         </Grid.Background>
 
-        <Grid x:Name="GridBotones" Margin="-19.4,74.4,0,69.5" Width="200.5" HorizontalAlignment="Left" VerticalAlignment="Center" Height="595.1" Grid.Column="1">
+        <Grid x:Name="GridBotones" Margin="-19.4,74.4,0,69.5" Width="200.5" HorizontalAlignment="Left" VerticalAlignment="Center" Height="595.1" Grid.Column="1" d:IsHidden="True">
             <Grid.RowDefinitions>
                 <RowDefinition Height="33*"/>
                 <RowDefinition Height="33*"/>
@@ -781,7 +812,7 @@
                 <Image x:Name="deadpoolcome_png" Height="124.367" Source="deadpoolcome.png" Stretch="Fill" Width="132.113" RenderTransformOrigin="0.497,0.531"/>
             </Button>
         </Grid>
-        <Grid x:Name="GridBarras" Height="58.4" Margin="220.6,4,10,0" VerticalAlignment="Top" Grid.Column="1">
+        <Grid x:Name="GridBarras" Height="58.4" Margin="220.6,4,10,0" VerticalAlignment="Top" Grid.Column="1" d:IsHidden="True">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="33*"/>
                 <ColumnDefinition Width="33*"/>
@@ -800,7 +831,7 @@
             <Image x:Name="dormir50_png" Grid.Column="2" Margin="6,7,0,7.9" Source="dormir50.png" Stretch="Fill" HorizontalAlignment="Left" Width="43.5" RenderTransformOrigin="0.5,0.5"/>
             <Image x:Name="dormir10_png" Grid.Column="2" Margin="6,7,0,7.9" Source="dormir10.png" Stretch="Fill" HorizontalAlignment="Left" Width="43.5" RenderTransformOrigin="0.5,0.5"/>
         </Grid>
-        <Canvas x:Name="DeadPool" Margin="545.267,67.4,10,0" RenderTransformOrigin="0.5,0.5" Grid.Column="1">
+        <Canvas x:Name="DeadPool" Margin="545.267,67.4,10,0" RenderTransformOrigin="0.5,0.5" Grid.Column="1" d:IsHidden="True">
             <Canvas.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -1132,7 +1163,7 @@
             </Canvas>
 
         </Canvas>
-        <Canvas x:Name="cv_comida" HorizontalAlignment="Left" Height="295.986" Margin="295.6,0,0,-333.986" VerticalAlignment="Bottom" Width="328.5" RenderTransformOrigin="0.5,0.5" Grid.Column="1">
+        <Canvas x:Name="cv_comida" HorizontalAlignment="Left" Height="295.986" Margin="295.6,0,0,-333.986" VerticalAlignment="Bottom" Width="328.5" RenderTransformOrigin="0.5,0.5" Grid.Column="1" d:IsHidden="True">
             <Canvas.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -1178,11 +1209,73 @@
                 </Image.RenderTransform>
             </Image>
         </Canvas>
+        <Canvas x:Name="cv_AboutUs" Grid.ColumnSpan="2">
+            <Canvas.Background>
+                <ImageBrush ImageSource="sobrenosotroswp.jpg" Stretch="None"/>
+            </Canvas.Background>
+            <Canvas x:Name="cv_Nombres" Height="673.5" Canvas.Left="500" Canvas.Top="23.5" Width="864">
+                <TextBlock x:Name="Nosotros_Nombres" Height="653.5" Canvas.Left="10" TextWrapping="Wrap" Canvas.Top="10" Width="844" FontFamily="Deadpool Movie" FontSize="60" Foreground="#FF970C0F" TextAlignment="Center"><Run Text="cARLOS LÓPEZ NIETO"/><LineBreak/><Run/><LineBreak/><Run Text="JESÚS MANUEL GONZ"/><Run Text="á"/><Run Text="LEZ SANJOS"/><Run Text="é"/><LineBreak/><Run Text=""/><LineBreak/><Run Text="3 ti"/><LineBreak/><Run/><LineBreak/><Run Text="ESCUE"/><Run Text="LA SUPERIOR DE INFORMÁTICA"/></TextBlock>
+            </Canvas>
+            <Button x:Name="btn_Accept" Content="ACEPTAR" Height="51.5" Canvas.Left="1111.5" Canvas.Top="665.5" Width="242.5" Foreground="#FF970C0F" Background="#FF111111" FontFamily="Deadpool Movie" FontSize="25" ToolTip="Volver a Inicio" Click="AboutUsAccept_Click"/>
+        </Canvas>
 
 
-        <Grid Margin="0,4" Grid.ColumnSpan="2">
-            <Canvas x:Name="Canvas_Inicio" Margin="0,-20,10,0" Background="#FFF91C1C">
-                <Button x:Name="Inicio" Content="INICIO&#xD;&#xA;" Height="72" Canvas.Left="249" Canvas.Top="282" Width="150" Click="button_Click"/>
+        <Grid x:Name="gr_Inicio" Margin="0,4" Grid.ColumnSpan="2">
+            <Canvas x:Name="Canvas_Inicio" Margin="0,-4.062,0,-3">
+                <Canvas.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FFD1171B" Offset="1"/>
+                        <GradientStop Color="#FF500F13"/>
+                    </LinearGradientBrush>
+                </Canvas.Background>
+                <Canvas x:Name="cv_disparo_cont" Height="267.854" Canvas.Left="10" Canvas.Top="225.124" Width="561" RenderTransformOrigin="0.5,0.5">
+                    <Canvas.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Canvas.RenderTransform>
+                    <Image x:Name="deserteagle_png" Height="312.907" Source="deserteagle.png" Stretch="Fill" Width="417" Canvas.Top="30"/>
+                    <Image x:Name="diparo_png" Height="149.25" Canvas.Left="362" Source="diparo.png" Stretch="Fill" Canvas.Top="40" Width="199" Visibility="Hidden"/>
+                </Canvas>
+                <Canvas x:Name="cv_introDeadPool" Height="518" Canvas.Left="661" Canvas.Top="192.062" Width="699"/>
+                <Image x:Name="katana1_png" Height="62" Canvas.Left="10" Source="katana1.png" Stretch="Fill" Canvas.Top="617.729" Width="592.667" RenderTransformOrigin="0.5,0.5">
+                    <Image.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Image.RenderTransform>
+                </Image>
+                <Canvas x:Name="cv_diparoNew" Height="263.604" Canvas.Left="10" Width="524.595" RenderTransformOrigin="0.5,0.5" Canvas.Top="-6">
+                    <Canvas.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Canvas.RenderTransform>
+                    <Image x:Name="deserteagleizq_png" Height="311.604" Canvas.Left="109.333" Source="deserteagleizq.png" Stretch="Fill" Width="415.262"/>
+                    <Image x:Name="diparo_png_Copy" Height="149.25" Source="diparo.png" Stretch="Fill" Canvas.Top="8.604" Width="164" RenderTransformOrigin="0.5,0.5" Visibility="Hidden">
+                        <Image.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform ScaleX="-1"/>
+                                <SkewTransform/>
+                                <RotateTransform/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Image.RenderTransform>
+                    </Image>
+                </Canvas>
+                <Button x:Name="btn_NewPart" Content="Nueva Partida" Height="76.062" Canvas.Left="73" Canvas.Top="167.062" Width="306" FontSize="48" Background="{x:Null}" Click="disparo_NuevaPartida"/>
+                <Button x:Name="btn_AboutUs" Content="Sobre Nosotros" Height="76.062" Canvas.Left="141" Canvas.Top="551.667" Width="386.262" Click="AboutUs_Click" FontSize="48" Background="{x:Null}"/>
+                <Button x:Name="btn_Continue" Content="Continuar" Height="76.062" Canvas.Left="147" Canvas.Top="432" Width="280" Click="button_Click" FontSize="48" Background="{x:Null}"/>
+                <Canvas x:Name="cvFrases" Height="120" Canvas.Left="660" Canvas.Top="25.062" Width="694"/>
             </Canvas>
         </Grid>
 

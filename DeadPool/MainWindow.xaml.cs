@@ -27,9 +27,10 @@ namespace DeadPool
     {
         DispatcherTimer t1;
         Ahorcado ahorcado;
-        private System.Media.SoundPlayer sonido = new System.Media.SoundPlayer { };
-        private System.Media.SoundPlayer efectos = new System.Media.SoundPlayer { };
-        
+        private MediaPlayer sonido;
+        private MediaPlayer efectos;
+        private MediaPlayer disparos;
+        private MediaPlayer katanas;
         public void IntroducirNombre() {
             
         }
@@ -37,18 +38,28 @@ namespace DeadPool
         {
            
             InitializeComponent();
+            MessageBox.Show("AVISO, esta aplicación contiene música, para proteger su integridad auditiva le rogamos que baje el volumen y suba progresivamente hasta donde usted vea conveniente\n Muchas gracias\n ¡¡CHIMICHANGAS!!", "ALERT!!", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            
 
-            //IntroMusic = new SoundPlayer(@"..\..\introMusic.wav");
-             /*sonido.Stream = Properties.Resources.introMusic;
-               sonido.Play();*/
-            var p1 = new System.Windows.Media.MediaPlayer();
-            p1.Open(new System.Uri(@"C:\Users\Jesus\Documents\DeadPool V2\DeadPool\Resources\introMusic.wav"));
-            p1.Play();
+            inic_App();
+            cv_AboutUs.Visibility = Visibility.Collapsed;
+        }
+        private void inic_App() {
+            sonido = new MediaPlayer();
+            sonido.Volume = 0.01;
+            efectos = new MediaPlayer();
 
+
+            sonido.Open(new Uri(System.IO.Directory.GetCurrentDirectory() + "\\..\\..\\Resources\\introMusic.wav"));
+            sonido.MediaEnded += new EventHandler(Media_Ended);
+            sonido.Play();
         }
 
-       
-        
+        private void Media_Ended(object sender, EventArgs e)
+        {
+            sonido.Open(new Uri(System.IO.Directory.GetCurrentDirectory() + "\\..\\..\\Resources\\introMusic.wav"));
+            sonido.Play();
+        }
 
         private void reloj(object sender, EventArgs e)
         {
@@ -177,14 +188,12 @@ namespace DeadPool
             btnComer.IsHitTestVisible = false;
             btnJugar.IsHitTestVisible = false;
             btnDormir.IsHitTestVisible = false;
-            /*Storyboard espada;
+            Storyboard espada;
             espada = (Storyboard)this.Resources["Espada"];
-            espada.Completed += Animacion_Completed;*/
-            Storyboard enfadado;
-            enfadado = (Storyboard)this.Resources["EspadaEnfado"];
-            enfadado.Completed += Animacion_Completed;
-            //espada.Begin();
-           // enfadado.Begin();
+            
+            espada.Completed += Animacion_Completed;
+            
+            espada.Begin();
 
         }
         private void Accion_comer()
@@ -195,12 +204,9 @@ namespace DeadPool
             Storyboard comiendo;
             comiendo = (Storyboard)this.Resources["Comiendo"];
             comiendo.Completed += Animacion_Completed;
-            efectos.Stream = Properties.Resources.eat;
-            //espada.Begin();
             comiendo.Begin();
+            efectos.Open(new Uri(System.IO.Directory.GetCurrentDirectory() + "\\..\\..\\Resources\\eat.wav"));
             efectos.Play();
-            
-
         }
         
 
@@ -212,21 +218,18 @@ namespace DeadPool
             Storyboard durmiendo;
             durmiendo = (Storyboard)this.Resources["Dormir"];
             durmiendo.Completed += Animacion_Completed;
-            efectos.Stream = Properties.Resources.snore;
-            //espada.Begin();
+            efectos.Open(new Uri(System.IO.Directory.GetCurrentDirectory() + "\\..\\..\\Resources\\snore.wav"));
+            efectos.Volume = 0.02;
+            efectos.Play();
             durmiendo.Begin();
-            var p1 = new System.Windows.Media.MediaPlayer();
-            p1.Open(new System.Uri(@"C:\Users\Jesus\Documents\DeadPool V2\DeadPool\Resources\snore.wav"));
-            p1.Play();
-            /*ThreadStart delegado = new ThreadStart(inicEfectos);
-            Thread hilo = new Thread(delegado);
-            hilo.Start();*/
+           
 
         }
-        /*public void inicEfectos() {
-            efectos.Play();
-        }*/
-
+        private void cargarNuevaProgressBar() {
+            pgb_Diversion.Value = 100;
+            pgb_Hambre.Value = 100;
+            pgb_Energia.Value = 100;
+        }
         private void cargarProgressBar()
         {
             XmlTextReader myXMLreader = new XmlTextReader("Persistencia.xml");
@@ -290,7 +293,19 @@ namespace DeadPool
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
+            Storyboard disparo;
+            disparo = (Storyboard)this.Resources["DisparoDer"];
             
+            disparo.Completed += DisparoDer_Completed;
+            disparos = new MediaPlayer();
+            disparos.Open(new Uri(System.IO.Directory.GetCurrentDirectory() + "\\..\\..\\Resources\\disparo.wav"));
+            disparos.Volume = 0.01;
+            disparos.Play();
+            disparo.Begin();
+            
+        }
+        private void DisparoDer_Completed(object sender, EventArgs e)
+        {
             Canvas_Inicio.Visibility = Visibility.Collapsed;
             cargarProgressBar();
 
@@ -309,6 +324,67 @@ namespace DeadPool
             dormir10_png.Visibility = Visibility.Hidden;
             dormir50_png.Visibility = Visibility.Hidden;
             dormir_png.Visibility = Visibility.Hidden;
+        }
+
+        private void disparo_NuevaPartida(object sender, RoutedEventArgs e)
+        {
+            Storyboard disparo = (Storyboard)this.Resources["DisparoIzq"];
+
+            disparo.Completed += DisparoIzq_Completed;
+            disparos = new MediaPlayer();
+            disparos.Open(new Uri(System.IO.Directory.GetCurrentDirectory() + "\\..\\..\\Resources\\disparo.wav"));
+            disparos.Volume = 0.01;
+            disparos.Play();
+            disparo.Begin();
+            
+
+        }
+        private void iniciar_Nuevo() {
+            Canvas_Inicio.Visibility = Visibility.Collapsed;
+            cargarNuevaProgressBar();
+            t1 = new DispatcherTimer();
+            t1.Interval = TimeSpan.FromSeconds(3.0);
+            t1.Tick += new EventHandler(reloj);
+
+
+            t1.Start();
+            Pizza_icon50_png.Visibility = Visibility.Hidden;
+            Pizza_icon10_png.Visibility = Visibility.Hidden;
+            Pizza_icon_png.Visibility = Visibility.Visible;
+            balon_10_png.Visibility = Visibility.Hidden;
+            balon_50_png.Visibility = Visibility.Hidden;
+            balon_png.Visibility = Visibility.Visible;
+            dormir10_png.Visibility = Visibility.Hidden;
+            dormir50_png.Visibility = Visibility.Hidden;
+            dormir_png.Visibility = Visibility.Hidden;
+        }
+        private void DisparoIzq_Completed(object sender, EventArgs e) {
+            iniciar_Nuevo();
+        }
+
+        private void AboutUs_Click(object sender, RoutedEventArgs e)
+        {
+            
+            Storyboard katana;
+            katana = (Storyboard)this.Resources["katana"];
+
+            katana.Completed += katana_Completed;
+            katanas = new MediaPlayer();
+            katanas.Open(new Uri(System.IO.Directory.GetCurrentDirectory() + "\\..\\..\\Resources\\katana.wav"));
+            katanas.Volume = 0.03;
+            katanas.Play();
+            katana.Begin();
+
+        }
+        private void katana_Completed(object sender, EventArgs e) {
+            cv_AboutUs.Visibility = Visibility.Visible;
+            Canvas_Inicio.Visibility = Visibility.Collapsed;
+        }
+
+        private void AboutUsAccept_Click(object sender, RoutedEventArgs e)
+        {
+            cv_AboutUs.Visibility = Visibility.Collapsed;
+            Canvas_Inicio.Visibility = Visibility.Visible;
         }
     }
 }

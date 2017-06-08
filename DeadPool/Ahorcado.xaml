@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DeadPool"
         mc:Ignorable="d"
-        Title="Ahorcado" Height="332.463" Width="544.03" Closing="Window_Closing">
+        Title="Ahorcado" Height="332.463" Width="544.03" WindowStartupLocation="CenterScreen" Closing="Window_Closing">
     <Grid>
         <Image x:Name="image" HorizontalAlignment="Left" Height="226" Margin="364,10,0,0" VerticalAlignment="Top" Width="164">
             <Image.OpacityMask>
