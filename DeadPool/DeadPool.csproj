@@ -244,6 +244,12 @@
   <ItemGroup>
     <Resource Include="infwhite.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="pausa.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="pause.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

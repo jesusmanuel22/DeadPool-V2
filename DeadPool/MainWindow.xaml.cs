@@ -74,6 +74,10 @@ namespace DeadPool
             
             Storyboard hambriento;
             hambriento = (Storyboard)this.Resources["pgb_Hambre"];
+            if (pgb_Hambre.Value < 10 && pgb_Diversion.Value < 10 || pgb_Hambre.Value < 10 && pgb_Energia.Value < 10
+                || pgb_Diversion.Value < 10 && pgb_Energia.Value < 10) {
+
+            }
             if (pgb_Hambre.Value < 50 && pgb_Hambre.Value >= 10)
             {
                 Pizza_icon50_png.Visibility = Visibility.Visible;
@@ -85,6 +89,7 @@ namespace DeadPool
                 Pizza_icon50_png.Visibility = Visibility.Hidden;
                 Pizza_icon10_png.Visibility = Visibility.Visible;
                 Pizza_icon_png.Visibility = Visibility.Hidden;
+                Accion_hambre();
             }
             else
             {
@@ -204,7 +209,18 @@ namespace DeadPool
             efectos.Volume = 0.5;
             efectos.Play();
         }
-        
+
+        private void Accion_hambre()
+        {
+            btnComer.IsHitTestVisible = false;
+            btnJugar.IsHitTestVisible = false;
+            btnDormir.IsHitTestVisible = false;
+            Storyboard hambriento;
+            hambriento = (Storyboard)this.Resources["Hambre_Barriga"];
+            hambriento.Completed += Animacion_Completed;
+            hambriento.Begin();
+        }
+
         private void Accion_Dormir()
         {
             btnComer.IsHitTestVisible = false;
@@ -437,7 +453,7 @@ namespace DeadPool
             }
             else {
                 sonido.Volume = 0.01;
-                instrumentales.Volume = 0.01;
+                instrumentales.Volume = 0.1;
                 ImageBrush brush1 = new ImageBrush();
                 BitmapImage image = new BitmapImage(new Uri(System.IO.Directory.GetCurrentDirectory() + "\\..\\..\\Resources\\mute.png"));
                 brush1.ImageSource = image;
