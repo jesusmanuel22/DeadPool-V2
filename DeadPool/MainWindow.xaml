@@ -1231,7 +1231,7 @@
                 <Image x:Name="deadpoolcome_png" Height="124.367" Source="deadpoolcome.png" Stretch="Fill" Width="132.113" RenderTransformOrigin="0.497,0.531"/>
             </Button>
         </Grid>
-        <Button x:Name="btn_VolverInicio" Content="PAUSE" Grid.Column="1" HorizontalAlignment="Right" Height="57.833" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="63" FontSize="16" FontWeight="Bold" Foreground="White" VerticalContentAlignment="Bottom">
+        <Button x:Name="btn_VolverInicio" Content="PAUSE" Grid.Column="1" HorizontalAlignment="Right" Height="57.833" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="63" FontSize="16" FontWeight="Bold" Foreground="White" VerticalContentAlignment="Bottom" MouseUp="abrir_menuPausa" Click="abrir_menuPausa">
             <Button.Background>
                 <ImageBrush ImageSource="pause.png"/>
             </Button.Background>
@@ -1304,6 +1304,38 @@
                 </Canvas.RenderTransform>
                 <Rectangle Fill="#FF1F221D" Height="70.826" Width="16.933" Stroke="Black" Canvas.Top="204.64" MouseUp="Rectangle_MouseUp"/>
                 <Path Data="M8.4675009,0.5 L16.338723,20.739999 16.433002,20.739999 16.433002,20.982425 16.434003,20.984999 16.433002,20.984999 16.433002,166.40701 0.5,166.40701 0.5,20.739999 0.59628057,20.739999 z" Fill="#FFC1CDB8" Stretch="Fill" Stroke="Black" Width="16.934" Height="205.307"/>
+
+            </Canvas>
+            <Canvas x:Name="cv_Espada2" Width="17.177" RenderTransformOrigin="0.5,0.5" Height="334.779" Canvas.Left="370.93" Canvas.Top="99.343">
+                <Canvas.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform Angle="33.766"/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </Canvas.RenderTransform>
+                <Path x:Name="path" Data="M8.4675009,0.5 L16.338723,20.739999 16.433002,20.739999 16.433002,20.982425 16.434003,20.984999 16.433002,20.984999 16.433002,166.40701 0.5,166.40701 0.5,20.739999 0.59628057,20.739999 z" Fill="#FFC1CDB8" Stretch="Fill" Stroke="Black" Width="16.934" Height="266.12" Canvas.Top="-1.901" Canvas.Left="-0.001" RenderTransformOrigin="0.5,0.5">
+                    <Path.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Path.RenderTransform>
+                </Path>
+
+                <Rectangle x:Name="rectangle" Fill="#FF1F221D" Height="70.826" Width="16.933" Stroke="Black" Canvas.Top="264.219" RenderTransformOrigin="0.5,0.5">
+                    <Rectangle.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform/>
+                            <RotateTransform/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Rectangle.RenderTransform>
+                </Rectangle>
 
             </Canvas>
 
@@ -1538,38 +1570,6 @@
                     </Ellipse>
                 </Canvas>
             </Canvas>
-            <Canvas x:Name="cv_Espada2" Width="17.177" RenderTransformOrigin="0.5,0.5" Height="334.779" Canvas.Left="370.93" Canvas.Top="99.343">
-                <Canvas.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform Angle="33.766"/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </Canvas.RenderTransform>
-                <Path x:Name="path" Data="M8.4675009,0.5 L16.338723,20.739999 16.433002,20.739999 16.433002,20.982425 16.434003,20.984999 16.433002,20.984999 16.433002,166.40701 0.5,166.40701 0.5,20.739999 0.59628057,20.739999 z" Fill="#FFC1CDB8" Stretch="Fill" Stroke="Black" Width="16.934" Height="266.12" Canvas.Top="-1.901" Canvas.Left="-0.001" RenderTransformOrigin="0.5,0.5">
-                    <Path.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform/>
-                            <SkewTransform/>
-                            <RotateTransform/>
-                            <TranslateTransform/>
-                        </TransformGroup>
-                    </Path.RenderTransform>
-                </Path>
-
-                <Rectangle x:Name="rectangle" Fill="#FF1F221D" Height="70.826" Width="16.933" Stroke="Black" Canvas.Top="264.219" RenderTransformOrigin="0.5,0.5">
-                    <Rectangle.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform/>
-                            <SkewTransform/>
-                            <RotateTransform/>
-                            <TranslateTransform/>
-                        </TransformGroup>
-                    </Rectangle.RenderTransform>
-                </Rectangle>
-
-            </Canvas>
             <Canvas x:Name="cv_Cabeza" Height="150.674" Width="138.533" Canvas.Left="57.5" RenderTransformOrigin="0.5,0.5" Canvas.Top="-10">
                 <Canvas.RenderTransform>
                     <TransformGroup>
@@ -1662,7 +1662,7 @@
                 </Image.RenderTransform>
             </Image>
         </Canvas>
-        <Canvas x:Name="cv_AboutUs" Grid.ColumnSpan="2" d:IsHidden="True" d:IsLocked="True">
+        <Canvas x:Name="cv_AboutUs" Grid.ColumnSpan="2" d:IsLocked="True" d:IsHidden="True">
             <Canvas.Background>
                 <ImageBrush ImageSource="sobrenosotroswp.jpg" Stretch="None"/>
             </Canvas.Background>
@@ -1671,9 +1671,17 @@
             </Canvas>
             <Button x:Name="btn_Accept" Content="ACEPTAR" Height="51.5" Canvas.Left="1111.5" Canvas.Top="665.5" Width="242.5" Foreground="#FF970C0F" Background="#FF111111" FontFamily="Deadpool Movie" FontSize="25" ToolTip="Volver a Inicio" Click="AboutUsAccept_Click"/>
         </Canvas>
+        <Canvas x:Name="cv_fondopausa" Grid.ColumnSpan="2" Opacity="0.5" Background="#FFC30000" d:IsHidden="True"/>
+        <Border x:Name="br_pausa" BorderBrush="Black" BorderThickness="10" Grid.Column="1" Margin="462.179,84,417,157" Background="#FF700000">
+            <Canvas x:Name="cv_brpausa" Margin="-10">
+                <Button x:Name="btn_volverInicio" Content="VOLVER A PÁGINA DE INICIO" Height="72" FontSize="24" FontFamily="Deadpool Movie" Canvas.Left="20" Canvas.Top="73.333" Width="383.667" Click="Volver_Inicio"/>
+                <Button x:Name="btn_musicaoff" Content="SILENCIAR MÚSICA" Height="63" Canvas.Left="20" Canvas.Top="206.5" Width="383.667" FontSize="20" FontFamily="Deadpool Movie" Click="btn_Sonido_Click"/>
+                <Button x:Name="btn_cancelar" Content="CANCELAR" Height="58.5" Canvas.Left="20" Canvas.Top="334" Width="383.667" FontSize="24" FontFamily="Deadpool Movie" Click="Cancelar_Option"/>
+            </Canvas>
+        </Border>
 
 
-        <Grid x:Name="gr_Inicio" Margin="0,4" Grid.ColumnSpan="2" d:IsHidden="True" d:IsLocked="True">
+        <Grid x:Name="gr_Inicio" Margin="0,4" Grid.ColumnSpan="2" d:IsHidden="True">
             <Canvas x:Name="Canvas_Inicio" Margin="0,-4.062,0,-3">
                 <Canvas.Background>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -1703,6 +1711,7 @@
                         </TransformGroup>
                     </Image.RenderTransform>
                 </Image>
+                <Image x:Name="img_introDeadPool" Height="512.667" Canvas.Left="660" Canvas.Top="167.062" Width="628"/>
                 <Canvas x:Name="cv_diparoNew" Height="263.604" Canvas.Left="10" Width="524.595" RenderTransformOrigin="0.5,0.5" Canvas.Top="-6">
                     <Canvas.RenderTransform>
                         <TransformGroup>
@@ -1712,7 +1721,6 @@
                             <TranslateTransform/>
                         </TransformGroup>
                     </Canvas.RenderTransform>
-                    <Image x:Name="img_introDeadPool" Height="537.005" Canvas.Left="792.2" Canvas.Top="90.724" Width="454.4"/>
                     <Image x:Name="deserteagleizq_png" Height="311.604" Canvas.Left="109.333" Source="deserteagleizq.png" Stretch="Fill" Width="415.262"/>
                     <Image x:Name="diparo_png_Copy" Height="149.25" Source="diparo.png" Stretch="Fill" Canvas.Top="8.604" Width="164" RenderTransformOrigin="0.5,0.5" Visibility="Hidden">
                         <Image.RenderTransform>
@@ -1725,15 +1733,16 @@
                         </Image.RenderTransform>
                     </Image>
                 </Canvas>
-                <Button x:Name="btn_NewPart" Content="Nueva Partida" Height="76.062" Canvas.Left="73" Canvas.Top="167.062" Width="306" FontSize="48" Background="{x:Null}" Click="disparo_NuevaPartida"/>
-                <Button x:Name="btn_AboutUs" Content="Sobre Nosotros" Height="76.062" Canvas.Left="141" Canvas.Top="551.667" Width="386.262" Click="AboutUs_Click" FontSize="48" Background="{x:Null}"/>
-                <Button x:Name="btn_Continue" Content="Continuar" Height="76.062" Canvas.Left="147" Canvas.Top="432" Width="280" Click="button_Click" FontSize="48" Background="{x:Null}"/>
-                <Canvas x:Name="cvFrases" Height="120" Canvas.Left="660" Canvas.Top="25.062" Width="694"/>
+                <Button x:Name="btn_NewPart" Content="Nueva Partida" Height="76.062" Canvas.Left="61" Canvas.Top="167.062" Width="318" FontSize="36" Background="{x:Null}" Click="disparo_NuevaPartida" FontFamily="Deadpool Movie"/>
+                <Button x:Name="btn_AboutUs" Content="Sobre Nosotros" Height="76.062" Canvas.Left="141" Canvas.Top="551.667" Width="386.262" Click="AboutUs_Click" FontSize="40" Background="{x:Null}" FontFamily="Deadpool Movie"/>
+                <Button x:Name="btn_Continue" Content="Continuar" Height="76.062" Canvas.Left="147" Canvas.Top="432" Width="280" Click="button_Click" FontSize="40" Background="{x:Null}" FontFamily="Deadpool Movie"/>
                 <Button x:Name="btn_Sonido" Content="" Height="57" Canvas.Left="1297" Canvas.Top="622.729" Width="57" ToolTip="Activar sonido" Click="btn_Sonido_Click">
                     <Button.Background>
                         <ImageBrush ImageSource="mute.png"/>
                     </Button.Background>
                 </Button>
+                <TextBlock x:Name="textBlock" Height="61.6" Canvas.Left="657" TextWrapping="Wrap" Canvas.Top="66.242" Width="148.079" FontSize="48" FontFamily="Deadpool Movie"><Run Text="Nic"/><Run Text="k"/></TextBlock>
+                <TextBox x:Name="textBox" Height="54" Canvas.Left="819" TextWrapping="Wrap" Canvas.Top="55.062" Width="469" FontSize="36"/>
             </Canvas>
         </Grid>
 

@@ -47,8 +47,12 @@ namespace DeadPool
             cargarImagenAleatoriaInicio();
             inic_App();
             cv_AboutUs.Visibility = Visibility.Collapsed;
+            cv_fondopausa.Visibility = Visibility.Collapsed;
+            cv_brpausa.Visibility = Visibility.Collapsed;
+            br_pausa.Visibility = Visibility.Collapsed;
             instrumentales = new MediaPlayer();
             instrumentales.Volume = 0.1;
+            btn_musicaoff.Content = "Desactivar música de fondo";
         }
 
         private void inic_App() {
@@ -74,58 +78,77 @@ namespace DeadPool
             
             Storyboard hambriento;
             hambriento = (Storyboard)this.Resources["pgb_Hambre"];
+            int numhambre = 0;
             if (pgb_Hambre.Value < 10 && pgb_Diversion.Value < 10 || pgb_Hambre.Value < 10 && pgb_Energia.Value < 10
                 || pgb_Diversion.Value < 10 && pgb_Energia.Value < 10) {
-
+                this.Close();
             }
-            if (pgb_Hambre.Value < 50 && pgb_Hambre.Value >= 10)
+            if (pgb_Hambre.Value ==0  || pgb_Hambre.Value ==0 || pgb_Diversion.Value ==0)
             {
+                this.Close();
+            }
+            if (pgb_Hambre.Value < 50 && pgb_Hambre.Value >= 20)
+            {
+                numhambre = 0;
                 Pizza_icon50_png.Visibility = Visibility.Visible;
                 Pizza_icon10_png.Visibility = Visibility.Hidden;
                 Pizza_icon_png.Visibility = Visibility.Hidden;
             }
-            else if (pgb_Hambre.Value < 10 && pgb_Hambre.Value >= 0)
+            else if (pgb_Hambre.Value < 20 && pgb_Hambre.Value >= 0)
             {
+                
                 Pizza_icon50_png.Visibility = Visibility.Hidden;
                 Pizza_icon10_png.Visibility = Visibility.Visible;
                 Pizza_icon_png.Visibility = Visibility.Hidden;
-                Accion_hambre();
+                if (numhambre == 0)
+                {
+                    Accion_hambre();
+                }
             }
             else
             {
+                numhambre = 0;
                 Pizza_icon50_png.Visibility = Visibility.Hidden;
                 Pizza_icon10_png.Visibility = Visibility.Hidden;
                 Pizza_icon_png.Visibility = Visibility.Visible;
             }
             Storyboard diversion;
             diversion = (Storyboard)this.Resources["pgb_Diversion"];
-            if (pgb_Diversion.Value < 50 && pgb_Diversion.Value >= 10)
+            int numaburrimiento = 0;
+            if (pgb_Diversion.Value < 50 && pgb_Diversion.Value >= 20)
             {
+                numaburrimiento = 0;
                 balon_10_png.Visibility = Visibility.Hidden;
                 balon_50_png.Visibility = Visibility.Visible;
                 balon_png.Visibility = Visibility.Hidden;
             }
-            else if (pgb_Diversion.Value < 10 && pgb_Diversion.Value >= 0)
+            else if (pgb_Diversion.Value < 20 && pgb_Diversion.Value >= 0)
             {
+                
                 balon_10_png.Visibility = Visibility.Visible;
                 balon_50_png.Visibility = Visibility.Hidden;
                 balon_png.Visibility = Visibility.Hidden;
+                if (numaburrimiento == 0) {
+                    Accion_aburrido();
+                    numaburrimiento++;
+                }
             }
             else
             {
+                numaburrimiento = 0;
                 balon_10_png.Visibility = Visibility.Hidden;
                 balon_50_png.Visibility = Visibility.Hidden;
                 balon_png.Visibility = Visibility.Visible;
             }
             Storyboard cansado;
             cansado = (Storyboard)this.Resources["pgb_Cansado"];
-            if (pgb_Energia.Value < 50 && pgb_Energia.Value >= 10)
+            if (pgb_Energia.Value < 50 && pgb_Energia.Value >= 20)
             {
                 dormir10_png.Visibility = Visibility.Hidden;
                 dormir50_png.Visibility = Visibility.Visible;
                 dormir_png.Visibility = Visibility.Hidden;
             }
-            else if (pgb_Energia.Value < 10 && pgb_Energia.Value >= 0)
+            else if (pgb_Energia.Value < 20 && pgb_Energia.Value >= 0)
             {
                 dormir10_png.Visibility = Visibility.Hidden;
                 dormir50_png.Visibility = Visibility.Hidden;
@@ -203,6 +226,7 @@ namespace DeadPool
             btnDormir.IsHitTestVisible = false;
             Storyboard comiendo;
             comiendo = (Storyboard)this.Resources["Comiendo"];
+            t1.Stop();
             comiendo.Completed += Animacion_Completed;
             comiendo.Begin();
             efectos.Open(new Uri(System.IO.Directory.GetCurrentDirectory() + "\\..\\..\\Resources\\eat.wav"));
@@ -215,8 +239,32 @@ namespace DeadPool
             btnComer.IsHitTestVisible = false;
             btnJugar.IsHitTestVisible = false;
             btnDormir.IsHitTestVisible = false;
+            String[] mvto = {
+                "Hambre_Barriga",
+                "Hambre_Barra",};
+            t1.Stop();
+            Random num = new Random();
+            int numero = num.Next(0, mvto.Length);
+            //img_introDeadPool.Source = new BitmapImage(new Uri(imagenes[numero], UriKind.Relative));
             Storyboard hambriento;
-            hambriento = (Storyboard)this.Resources["Hambre_Barriga"];
+            hambriento = (Storyboard)this.Resources[mvto[numero]];
+            hambriento.Completed += Animacion_Completed;
+            hambriento.Begin();
+        }
+
+        private void Accion_aburrido()
+        {
+            btnComer.IsHitTestVisible = false;
+            btnJugar.IsHitTestVisible = false;
+            btnDormir.IsHitTestVisible = false;
+            t1.Stop();
+            String[] mvto = {
+                "Hambre_Barriga",
+                "Hambre_Barra",};
+            Random num = new Random();
+            int numero = num.Next(0, mvto.Length);
+            Storyboard hambriento;
+            hambriento = (Storyboard)this.Resources[mvto[numero]];
             hambriento.Completed += Animacion_Completed;
             hambriento.Begin();
         }
@@ -228,6 +276,7 @@ namespace DeadPool
             btnDormir.IsHitTestVisible = false;
             Storyboard durmiendo;
             durmiendo = (Storyboard)this.Resources["Dormir"];
+            t1.Stop();
             durmiendo.Completed += Animacion_Completed;
             efectos.Open(new Uri(System.IO.Directory.GetCurrentDirectory() + "\\..\\..\\Resources\\snore.wav"));
             efectos.Volume = 0.2;
@@ -299,6 +348,8 @@ namespace DeadPool
 
         private void Animacion_Completed(object sender, EventArgs e)
         {
+
+            t1.Start();
             btnComer.IsHitTestVisible = true;
             btnJugar.IsHitTestVisible = true;
             btnDormir.IsHitTestVisible = true;
@@ -429,9 +480,16 @@ namespace DeadPool
         private void cargarImagenAleatoriaInicio()
         {
             String[] imagenes = {
-                "ahorcado_Cabeza.png",
-                "ahorcado_Completo.png",
-                "ahorcado_Cuerpo.png",};
+                "1.jpg",
+                "2.jpg",
+                "3.jpg",
+            "4.jpg",
+            "5.jpg",
+            "6.jpg",
+            "7.jpg",
+            "8.jpg",
+            "9.jpg",
+            "10.png",};
             Random num = new Random();
             int numero = num.Next(0, imagenes.Length);
             img_introDeadPool.Source = new BitmapImage(new Uri(imagenes[numero], UriKind.Relative));
@@ -450,6 +508,7 @@ namespace DeadPool
                 brush1.ImageSource = image;
                 btn_Sonido.Background = brush1;
                 musica = false;
+                btn_musicaoff.Content = "Activar música de fondo";
             }
             else {
                 sonido.Volume = 0.01;
@@ -459,7 +518,43 @@ namespace DeadPool
                 brush1.ImageSource = image;
                 btn_Sonido.Background = brush1;
                 musica = true;
+                btn_musicaoff.Content = "Desactivar música de fondo";
             }
+        }
+
+        
+
+      
+
+        private void abrir_menuPausa(object sender, RoutedEventArgs e)
+        {
+            cv_fondopausa.Visibility = Visibility.Visible;
+            cv_brpausa.Visibility = Visibility.Visible;
+            br_pausa.Visibility = Visibility.Visible;
+        }
+
+        private void Cancelar_Option(object sender, RoutedEventArgs e)
+        {
+            cv_fondopausa.Visibility = Visibility.Collapsed;
+            cv_brpausa.Visibility = Visibility.Collapsed;
+            br_pausa.Visibility = Visibility.Collapsed;
+
+        }
+
+        private void Volver_Inicio(object sender, RoutedEventArgs e)
+        {
+            t1.Stop();
+            sonido.Play();
+            cv_AboutUs.Visibility = Visibility.Collapsed;
+            cv_fondopausa.Visibility = Visibility.Collapsed;
+            cv_brpausa.Visibility = Visibility.Collapsed;
+            br_pausa.Visibility = Visibility.Collapsed;
+            DeadPool.Visibility = Visibility.Collapsed;
+            Canvas_Inicio.Visibility = Visibility.Visible;
+            cargarImagenAleatoriaInicio();
+            instrumentales.Stop();
+        
+            
         }
     }
 }

@@ -309,38 +309,38 @@ namespace DeadPool
         {
             int puntos = 0;
 
-            if (min==0 && segundos <= 6)
+            if (min==0 && seg <= 6)
             {
                 puntos = 100;
-            } else if ((min == 0 && 6 < segundos) && (min == 0 && segundos <= 12))
+            } else if ((min == 0 && 6 > seg) && (min == 0 && seg <= 12))
             {
                 puntos = 90;
             }
-            else if ((min == 0 &&12 < segundos) && (min == 0 && segundos <= 18))
+            else if ((min == 0 && 12 > seg) && (min == 0 && seg <= 18))
             {
                 puntos = 80;
-            } else if ((min == 0 && 18 < segundos) && (min == 0 && segundos <= 24))
+            } else if ((min == 0 && 18 > seg) && (min == 0 && seg <= 24))
             {
                 puntos = 70;            }
-            else if ((min == 0 && 24 < segundos) && (min == 0 && segundos <= 30))
+            else if ((min == 0 && 24 > seg) && (min == 0 && seg <= 30))
             {
                 puntos = 60;
             }
-            else if ((min == 0 && 30 < segundos) && (min == 0 && segundos <= 36))
+            else if ((min == 0 && 30 > seg) && (min == 0 && seg <= 36))
             {
                 puntos = 50;
-            } else if ((min == 0 && 36 < segundos) && (min == 0 && segundos <= 42))
+            } else if ((min == 0 && 36 > seg) && (min == 0 && seg <= 42))
             {
                 puntos = 40;
-            } else if ((min == 0 && 42 < segundos) && (min == 0 && segundos <= 48))
+            } else if ((min == 0 && 42 > seg) && (min == 0 && seg <= 48))
             {
                 puntos = 30;
             }
-            else if ((min == 0 && 48 < segundos) && (min == 0 && segundos <= 54))
+            else if ((min == 0 && 48 > seg) && (min == 0 && seg <= 54))
             {
                 puntos = 20;
             }
-            else if ((min == 0 && 54 < segundos) && (min == 0 && segundos <= 60))
+            else if ((min == 0 && 54 > seg) && (min == 0 && seg <= 60))
             {
                 puntos = 10;
             }

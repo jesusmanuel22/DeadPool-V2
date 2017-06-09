@@ -18,10 +18,10 @@
         <Button x:Name="button" Content="Aceptar" Height="51" Margin="505,0,478.03,135.963" VerticalAlignment="Bottom" Click="button_Click" FontSize="36"/>
         <TextBox x:Name="textBox" ToolTip="Introduce las letras de una en una, si mete más, solo coge la primera" PreviewKeyDown="EnterClicked" HorizontalAlignment="Left" Height="51" Margin="327,0,0,135.963" TextWrapping="Wrap" VerticalAlignment="Bottom" Width="86" FontSize="40" Text="&#xD;&#xA;"/>
         <TextBlock x:Name="textBlock" Margin="20,275,505.03,209.963" TextWrapping="Wrap" Text="TextBlock" FontSize="48" FontWeight="Bold" ToolTip="Letras Válidas" Foreground="White"/>
-        <TextBlock x:Name="textBlockfail" Margin="10,158.707,560.03,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" FontSize="48" FontWeight="Bold" Foreground="#FFF71616" ToolTip="Letras erróneas" Height="91.293"/>
+        <TextBlock x:Name="textBlockfail" Margin="10,158.707,324.53,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" FontSize="48" FontWeight="Bold" Foreground="#FFF71616" ToolTip="Letras erróneas" Height="91.293"/>
         <Label x:Name="label" Content="Intentos: " HorizontalAlignment="Left" Margin="10,23.036,0,0" VerticalAlignment="Top" Foreground="White" ToolTip="Número de intentos restantes" FontSize="24"/>
         <TextBlock x:Name="textBlock_Intentos" HorizontalAlignment="Left" Margin="118.393,13.162,0,0" TextWrapping="Wrap" Text="5" VerticalAlignment="Top" FontSize="48" FontWeight="Bold" Width="344" Foreground="White" ToolTip="Número de intentos restantes"/>
-        <Label x:Name="lbl_SegundosPasados" Content="" HorizontalAlignment="Left" Margin="20,85,0,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" Height="48.96" Width="380" FontSize="22"/>
+        <Label x:Name="lbl_SegundosPasados" Content="" Margin="20,85,324.53,0" VerticalAlignment="Top" Background="{x:Null}" Foreground="White" Height="48.96" FontSize="22"/>
         <Button x:Name="btn_informacion" Content="" HorizontalAlignment="Left" Height="50.333" Margin="10,0,0,10" VerticalAlignment="Bottom" Width="59.193" AutomationProperties.IsColumnHeader="True" ToolTip="Información del juego" Click="btn_informacion_Click">
             <Button.Background>
                 <ImageBrush ImageSource="infwhite.png"/>
