@@ -235,6 +235,15 @@
   <ItemGroup>
     <Resource Include="sonido.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="fondo_Juego.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="inf.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="infwhite.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

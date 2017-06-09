@@ -33,6 +33,7 @@ namespace DeadPool
         private MediaPlayer disparos;
         private MediaPlayer katanas;
         private MediaPlayer instrumentales;
+        Boolean musica = true;
         public void IntroducirNombre() {
             
         }
@@ -40,13 +41,16 @@ namespace DeadPool
         {
            
             InitializeComponent();
+            
             MessageBox.Show("AVISO, esta aplicación contiene música, para proteger su integridad auditiva le rogamos que baje el volumen y suba progresivamente hasta donde usted vea conveniente\n Muchas gracias\n ¡¡CHIMICHANGAS!!", "ALERT!!", MessageBoxButton.OK, MessageBoxImage.Exclamation);
 
             cargarImagenAleatoriaInicio();
             inic_App();
             cv_AboutUs.Visibility = Visibility.Collapsed;
             instrumentales = new MediaPlayer();
+            instrumentales.Volume = 0.1;
         }
+
         private void inic_App() {
             sonido = new MediaPlayer();
             sonido.Volume = 0.01;
@@ -150,7 +154,7 @@ namespace DeadPool
             btnJugar.IsHitTestVisible = false;
             btnDormir.IsHitTestVisible = false;
             t1.Stop();
-            ahorcado = new Ahorcado(this.btnComer,this.btnDormir,this.btnJugar,this.t1, this.pgb_Diversion);
+            ahorcado = new Ahorcado(this.btnComer,this.btnDormir,this.btnJugar,this.t1, this.pgb_Diversion,this.instrumentales,musica);
             ahorcado.Show();
             
 
@@ -161,20 +165,13 @@ namespace DeadPool
             pgb_Energia.Value += 35.0;
             Accion_Dormir();
         }
-
         
-
-        
-
         private void el_cabeza_MouseUp(object sender, MouseButtonEventArgs e)
         {
       
                 Mascara_png.Visibility = Visibility.Visible;
         }
         
-
-      
-
         private void Mascara_png_MouseUp(object sender, MouseButtonEventArgs e)
         {
             Mascara_png.Visibility = Visibility.Hidden;
@@ -193,6 +190,7 @@ namespace DeadPool
             espada.Begin();
 
         }
+
         private void Accion_comer()
         {
             btnComer.IsHitTestVisible = false;
@@ -207,7 +205,6 @@ namespace DeadPool
             efectos.Play();
         }
         
-
         private void Accion_Dormir()
         {
             btnComer.IsHitTestVisible = false;
@@ -217,17 +214,19 @@ namespace DeadPool
             durmiendo = (Storyboard)this.Resources["Dormir"];
             durmiendo.Completed += Animacion_Completed;
             efectos.Open(new Uri(System.IO.Directory.GetCurrentDirectory() + "\\..\\..\\Resources\\snore.wav"));
-            efectos.Volume = 0.5;
+            efectos.Volume = 0.2;
             efectos.Play();
             durmiendo.Begin();
            
 
         }
+
         private void cargarNuevaProgressBar() {
             pgb_Diversion.Value = 100;
             pgb_Hambre.Value = 100;
             pgb_Energia.Value = 100;
         }
+
         private void cargarProgressBar()
         {
             XmlTextReader myXMLreader = new XmlTextReader("Persistencia.xml");
@@ -254,8 +253,7 @@ namespace DeadPool
             }
             myXMLreader.Close();
         }
-
-
+        
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             XmlWriterSettings settings = new XmlWriterSettings();
@@ -282,6 +280,7 @@ namespace DeadPool
             }
            
         }
+
         private void Animacion_Completed(object sender, EventArgs e)
         {
             btnComer.IsHitTestVisible = true;
@@ -303,6 +302,7 @@ namespace DeadPool
             disparo.Begin();
             
         }
+
         private void DisparoDer_Completed(object sender, EventArgs e)
         {
             Canvas_Inicio.Visibility = Visibility.Collapsed;
@@ -331,15 +331,16 @@ namespace DeadPool
             dormir50_png.Visibility = Visibility.Hidden;
             dormir_png.Visibility = Visibility.Hidden;
         }
-    private void Media_Ended2(object sender, EventArgs e)
+
+        private void Media_Ended2(object sender, EventArgs e)
     {
         instrumentales.Open(new Uri(System.IO.Directory.GetCurrentDirectory() + "\\..\\..\\Resources\\instrumental.wav"));
         instrumentales.Play();
     }
-    private void disparo_NuevaPartida(object sender, RoutedEventArgs e)
+
+        private void disparo_NuevaPartida(object sender, RoutedEventArgs e)
         {
-            instrumentales = new MediaPlayer();
-            instrumentales.Volume = 0.1;
+            
 
 
             instrumentales.Open(new Uri(System.IO.Directory.GetCurrentDirectory() + "\\..\\..\\Resources\\instrumental.wav"));
@@ -357,6 +358,7 @@ namespace DeadPool
             
 
         }
+
         private void iniciar_Nuevo() {
             Canvas_Inicio.Visibility = Visibility.Collapsed;
             cargarNuevaProgressBar();
@@ -376,6 +378,7 @@ namespace DeadPool
             dormir50_png.Visibility = Visibility.Hidden;
             dormir_png.Visibility = Visibility.Hidden;
         }
+
         private void DisparoIzq_Completed(object sender, EventArgs e) {
             iniciar_Nuevo();
         }
@@ -394,6 +397,7 @@ namespace DeadPool
             katana.Begin();
 
         }
+        
         private void katana_Completed(object sender, EventArgs e) {
             cv_AboutUs.Visibility = Visibility.Visible;
             Canvas_Inicio.Visibility = Visibility.Collapsed;
@@ -405,6 +409,7 @@ namespace DeadPool
             Canvas_Inicio.Visibility = Visibility.Visible;
             cargarImagenAleatoriaInicio();
         }
+
         private void cargarImagenAleatoriaInicio()
         {
             String[] imagenes = {
@@ -423,11 +428,21 @@ namespace DeadPool
             {
                 sonido.Volume = 0;
                 instrumentales.Volume = 0;
+                // btn_Sonido.Background = ImageBrush.(@"/../../Resources/mute.png");
+                ImageBrush brush1 = new ImageBrush();
+                BitmapImage image = new BitmapImage(new Uri(System.IO.Directory.GetCurrentDirectory() + "\\..\\..\\Resources\\sonido.png"));
+                brush1.ImageSource = image;
+                btn_Sonido.Background = brush1;
+                musica = false;
             }
             else {
                 sonido.Volume = 0.01;
                 instrumentales.Volume = 0.01;
-
+                ImageBrush brush1 = new ImageBrush();
+                BitmapImage image = new BitmapImage(new Uri(System.IO.Directory.GetCurrentDirectory() + "\\..\\..\\Resources\\mute.png"));
+                brush1.ImageSource = image;
+                btn_Sonido.Background = brush1;
+                musica = true;
             }
         }
     }

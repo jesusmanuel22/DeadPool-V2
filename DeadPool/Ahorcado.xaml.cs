@@ -28,27 +28,84 @@ namespace DeadPool
         int segundos;
         System.Windows.Threading.DispatcherTimer myDispatcherTimer;
         Button   comer, dormir, jugar;
-        DispatcherTimer t1;
+        DispatcherTimer t2,t3;
         ProgressBar pb;
+        MediaPlayer instrumental;
+        MediaPlayer cancion_juego;
+        Boolean musica;
 
-        public Ahorcado(Button b1, Button b2, Button b3, DispatcherTimer t1, ProgressBar pb)
+        public Ahorcado(Button b1, Button b2, Button b3, DispatcherTimer t1, ProgressBar pb, MediaPlayer instrumentales,Boolean sonido)
         {
             InitializeComponent();
+            this.musica = sonido;
+            t2 = new DispatcherTimer();
+            t2.Interval = TimeSpan.FromSeconds(1.0);
+            t2.Tick += new EventHandler(reloj);
+            t2.Start();
+
             textBox.Focus();
             segundos = 1;
             fallos = 0;
             randomSuperHero();
             rayasNombre();
             this.pb = pb;
+            this.instrumental = instrumentales;
+            instrumental.Volume=0;
+            cancion_juego = new MediaPlayer();
+            cargarCancionAleatoriaJuego();
+            if (musica) {
+                cancion_juego.Volume = 0.05;
 
-            myDispatcherTimer = new System.Windows.Threading.DispatcherTimer();
-            myDispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 1000); // 100 Milliseconds 
-            myDispatcherTimer.Tick += new EventHandler(Each_Tick);
-            myDispatcherTimer.Start();
+            }else if (!musica)
+            {
+                cancion_juego.Volume = 0;
+            }
+            
+            cancion_juego.Play();
+            //myDispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+            //myDispatcherTimer.Interval = new TimeSpan(0, 0, 0, 0, 1000); // 100 Milliseconds 
+            //myDispatcherTimer.Tick += new EventHandler(Each_Tick);
+           // myDispatcherTimer.Start();
             comer = b1;
             dormir = b2;
             jugar = b3;
-            this.t1 = t1;
+            this.t3 = t1;
+
+        }
+       int seg = 0;
+        int min = 0;
+        int hora = 0;  
+        private void reloj(object sender, EventArgs e)
+        {
+
+            seg++;
+
+            if (seg == 60)
+            {
+                min++;
+                seg = 0;
+            }
+            else if (min == 60)
+            {
+                hora++;
+                min = 0;
+            }
+
+            lbl_SegundosPasados.Content = "Tiempo transcurrido: " + min.ToString().PadLeft(2, '0') +
+                ":" + seg.ToString().PadLeft(2, '0');
+
+
+        }
+        private void cargarCancionAleatoriaJuego()
+        {
+            String[] canciones = {
+                "instrumental.wav",
+            "introMusic.wav"};
+            Random num = new Random();
+            int numero = num.Next(0, canciones.Length);
+            //img_introDeadPool.Source = new BitmapImage(new Uri(imagenes[numero], UriKind.Relative));
+            cancion_juego.Open(new Uri(System.IO.Directory.GetCurrentDirectory() + "\\..\\..\\Resources\\"+canciones[numero]));
+
         }
 
         private void randomSuperHero()
@@ -149,8 +206,8 @@ namespace DeadPool
                         image.Source = new BitmapImage(new Uri("cal_deadpoolsf.png", UriKind.Relative));
                         textBlock_Intentos.Text = "GAME OVER";
                         textBox.IsEnabled = false;
-                        myDispatcherTimer.Stop();
                         textBlock_Intentos.Foreground = Brushes.DarkRed;
+                        t2.Stop();
                         break;
                 }
             }
@@ -198,6 +255,16 @@ namespace DeadPool
             }
         }
 
+        private void btn_informacion_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("¡¡Bienvenido al minijuego!!\n En este minijuego te encontrarás una"+
+                "versión mejorada del ahorcado, ya que tendrás que evitar que yo, DeadPool,"+
+                " me pegue un tiro porque no te sepas los superhéroes...\n Introduce una sola letra,"+
+                " si pones más sólo cogerá la primera. Además, no repitas letras, ¡noob!.\n "+
+                "Hazlo en poco tiempo y me aburriré menos.\n Ahora a conseguir mi aprobado, "+
+                "¡¡Good Luck & Chimichangas!! ", "Información", MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
         private Boolean completo()
         {
             foreach (char c in textBlock.Text)
@@ -216,61 +283,77 @@ namespace DeadPool
             comer.IsHitTestVisible = true;
             dormir.IsHitTestVisible = true;
             jugar.IsHitTestVisible = true;
-            t1.Start();
+            if (musica)
+            {
+                instrumental.Volume = 0.1;
+
+            }
+            else if (!musica)
+            {
+                instrumental.Volume = 0; 
+            }
+            
+            cancion_juego.Stop();
+            t3.Start();
         }
 
-        private void Each_Tick(object o, EventArgs sender)
+        /*private void Each_Tick(object o, EventArgs sender)
         {
-            label1.Content = "Segundos pasados: " + segundos++.ToString("mm:ss");
+            //lbl_SegundosPasados.Content = "Segundos pasados: " + segundos++.ToString("mm:ss");
+            lbl_SegundosPasados.Content = "Tiempo total" + hora.ToString().PadLeft(2, '0') + ":"
+                + min.ToString().PadLeft(2, '0') +
+                ":" + seg.ToString().PadLeft(2, '0');
         }
-
+        */
         private int calculapuntos()
         {
             int puntos = 0;
 
-            if (segundos <= 6)
+            if (min==0 && segundos <= 6)
             {
                 puntos = 100;
-            } else if ((6 < segundos) && (segundos <= 12))
+            } else if ((min == 0 && 6 < segundos) && (min == 0 && segundos <= 12))
             {
                 puntos = 90;
             }
-            else if ((12 < segundos) && (segundos <= 18))
+            else if ((min == 0 &&12 < segundos) && (min == 0 && segundos <= 18))
             {
                 puntos = 80;
-            } else if ((18 < segundos) && (segundos <= 24))
+            } else if ((min == 0 && 18 < segundos) && (min == 0 && segundos <= 24))
             {
                 puntos = 70;            }
-            else if ((24 < segundos) && (segundos <= 30))
+            else if ((min == 0 && 24 < segundos) && (min == 0 && segundos <= 30))
             {
                 puntos = 60;
             }
-            else if ((30 < segundos) && (segundos <= 36))
+            else if ((min == 0 && 30 < segundos) && (min == 0 && segundos <= 36))
             {
                 puntos = 50;
-            } else if ((36 < segundos) && (segundos <= 42))
+            } else if ((min == 0 && 36 < segundos) && (min == 0 && segundos <= 42))
             {
                 puntos = 40;
-            } else if ((42 < segundos) && (segundos <= 48))
+            } else if ((min == 0 && 42 < segundos) && (min == 0 && segundos <= 48))
             {
                 puntos = 30;
             }
-            else if ((48 < segundos) && (segundos <= 54))
+            else if ((min == 0 && 48 < segundos) && (min == 0 && segundos <= 54))
             {
                 puntos = 20;
             }
-            else if ((54 < segundos) && (segundos <= 60))
+            else if ((min == 0 && 54 < segundos) && (min == 0 && segundos <= 60))
             {
                 puntos = 10;
             }
-            else if (60 < segundos)
+            else if (1 < min)
             {
                 puntos = 0;
             }
-
-            myDispatcherTimer.Stop();
-            label1.Content = "Has tardado "+segundos+" segundos y has ganado "+puntos+" puntos";
+            t2.Stop();
+            //myDispatcherTimer.Stop();
+            /*myDispatcherTimer.Stop();*/
+            lbl_SegundosPasados.Content = "Has tardado "+min+ " con  " + seg +" segundos y has ganado "+puntos+" puntos";
             pb.Value+=puntos;
+            
             return puntos;
 
         }
