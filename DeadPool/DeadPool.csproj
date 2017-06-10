@@ -38,6 +38,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Speech" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -263,6 +264,12 @@
     <Resource Include="7.jpg" />
     <Resource Include="8.jpg" />
     <Resource Include="9.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="deadpooldead.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\gameOver.wav" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

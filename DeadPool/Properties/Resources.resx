@@ -130,6 +130,9 @@
   <data name="eat1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\eat.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="gameOver" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\gameOver.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="introMusic" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\introMusic.wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>

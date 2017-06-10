@@ -18,6 +18,7 @@ using System.Media;
 using System.Xml;
 using System.Threading;
 using System.IO;
+using System.Speech.Synthesis;
 
 namespace DeadPool
 {
@@ -33,31 +34,52 @@ namespace DeadPool
         private MediaPlayer disparos;
         private MediaPlayer katanas;
         private MediaPlayer instrumentales;
+        private MediaPlayer gameOverSound;
         Boolean musica = true;
+        Boolean gameOvervar = false;
+        int numaburrimiento = 0;
+        int numhambre = 0;
+        int numCansado = 0;
+        private SpeechSynthesizer synthesizer;
+        private String nombre;
+        private Thread t;
+
         public void IntroducirNombre() {
             
         }
+
         public MainWindow()
         {
-           
             InitializeComponent();
-            
+
+            synthesizer = new SpeechSynthesizer();
+            synthesizer.SetOutputToDefaultAudioDevice();
+            synthesizer.Volume = 100;
+            synthesizer.Rate = 1;
+
+
             MessageBox.Show("AVISO, esta aplicación contiene música, para proteger su integridad auditiva le rogamos que baje el volumen y suba progresivamente hasta donde usted vea conveniente\n Muchas gracias\n ¡¡CHIMICHANGAS!!", "ALERT!!", MessageBoxButton.OK, MessageBoxImage.Exclamation);
 
             cargarImagenAleatoriaInicio();
             inic_App();
+            btn_Pausa.Visibility = Visibility.Hidden;
             cv_AboutUs.Visibility = Visibility.Collapsed;
             cv_fondopausa.Visibility = Visibility.Collapsed;
             cv_brpausa.Visibility = Visibility.Collapsed;
             br_pausa.Visibility = Visibility.Collapsed;
             instrumentales = new MediaPlayer();
-            instrumentales.Volume = 0.1;
+            instrumentales.Volume = 0.3;
             btn_musicaoff.Content = "Desactivar música de fondo";
+        }
+
+        private void ejecutarVoz(string frase)
+        {
+            synthesizer.Speak(frase);
         }
 
         private void inic_App() {
             sonido = new MediaPlayer();
-            sonido.Volume = 0.01;
+            sonido.Volume = 0.1;
             efectos = new MediaPlayer();
             sonido.Open(new Uri(System.IO.Directory.GetCurrentDirectory() + "\\..\\..\\Resources\\introMusic.wav"));
             sonido.MediaEnded += new EventHandler(Media_Ended);
@@ -78,23 +100,32 @@ namespace DeadPool
             
             Storyboard hambriento;
             hambriento = (Storyboard)this.Resources["pgb_Hambre"];
-            int numhambre = 0;
-            if (pgb_Hambre.Value < 10 && pgb_Diversion.Value < 10 || pgb_Hambre.Value < 10 && pgb_Energia.Value < 10
-                || pgb_Diversion.Value < 10 && pgb_Energia.Value < 10) {
-                this.Close();
+            if ((pgb_Hambre.Value < 10 && pgb_Diversion.Value < 10 || pgb_Hambre.Value < 10 && pgb_Energia.Value < 10
+                || pgb_Diversion.Value < 10 && pgb_Energia.Value < 10) && !gameOvervar) {
+
+                game_Over();
             }
-            if (pgb_Hambre.Value ==0  || pgb_Hambre.Value ==0 || pgb_Diversion.Value ==0)
+            if ((pgb_Hambre.Value ==0  || pgb_Hambre.Value ==0 || pgb_Diversion.Value ==0) && !gameOvervar)
             {
-                this.Close();
+
+                game_Over();
+
             }
-            if (pgb_Hambre.Value < 50 && pgb_Hambre.Value >= 20)
+            if ((pgb_Hambre.Value < 50 && pgb_Hambre.Value >= 20) && !gameOvervar)
             {
-                numhambre = 0;
                 Pizza_icon50_png.Visibility = Visibility.Visible;
                 Pizza_icon10_png.Visibility = Visibility.Hidden;
                 Pizza_icon_png.Visibility = Visibility.Hidden;
+                if (numhambre == 0)
+                {
+                    t = new Thread(() => ejecutarVoz("Tengo hambre"));
+                    t.Start();
+                    Accion_hambre();
+                    numhambre++;
+                }
+                
             }
-            else if (pgb_Hambre.Value < 20 && pgb_Hambre.Value >= 0)
+            else if ((pgb_Hambre.Value < 20 && pgb_Hambre.Value >= 0)&&!gameOvervar)
             {
                 
                 Pizza_icon50_png.Visibility = Visibility.Hidden;
@@ -102,10 +133,13 @@ namespace DeadPool
                 Pizza_icon_png.Visibility = Visibility.Hidden;
                 if (numhambre == 0)
                 {
+                    t = new Thread(() => ejecutarVoz("¿En serio tengo que repetirte que tengo hambre? CHIMICHANGAS EVRYWHERE"));
+                    t.Start();
                     Accion_hambre();
+                    numhambre++;
                 }
             }
-            else
+            else if(!gameOvervar)
             {
                 numhambre = 0;
                 Pizza_icon50_png.Visibility = Visibility.Hidden;
@@ -114,26 +148,28 @@ namespace DeadPool
             }
             Storyboard diversion;
             diversion = (Storyboard)this.Resources["pgb_Diversion"];
-            int numaburrimiento = 0;
-            if (pgb_Diversion.Value < 50 && pgb_Diversion.Value >= 20)
+            
+            if ((pgb_Diversion.Value < 50 && pgb_Diversion.Value >= 20)&& !gameOvervar)
             {
                 numaburrimiento = 0;
                 balon_10_png.Visibility = Visibility.Hidden;
                 balon_50_png.Visibility = Visibility.Visible;
                 balon_png.Visibility = Visibility.Hidden;
             }
-            else if (pgb_Diversion.Value < 20 && pgb_Diversion.Value >= 0)
+            else if ((pgb_Diversion.Value < 20 && pgb_Diversion.Value >= 0) && !gameOvervar)
             {
                 
                 balon_10_png.Visibility = Visibility.Visible;
                 balon_50_png.Visibility = Visibility.Hidden;
                 balon_png.Visibility = Visibility.Hidden;
                 if (numaburrimiento == 0) {
+                    t = new Thread(() => ejecutarVoz("Me estoy empezando a aburrir..."));
+                    t.Start();
                     Accion_aburrido();
                     numaburrimiento++;
                 }
             }
-            else
+            else if(!gameOvervar)
             {
                 numaburrimiento = 0;
                 balon_10_png.Visibility = Visibility.Hidden;
@@ -142,21 +178,29 @@ namespace DeadPool
             }
             Storyboard cansado;
             cansado = (Storyboard)this.Resources["pgb_Cansado"];
-            if (pgb_Energia.Value < 50 && pgb_Energia.Value >= 20)
+            numCansado = 0;
+            if ((pgb_Energia.Value < 50 && pgb_Energia.Value >= 20) && !gameOvervar)
             {
+                numCansado = 0;
                 dormir10_png.Visibility = Visibility.Hidden;
                 dormir50_png.Visibility = Visibility.Visible;
                 dormir_png.Visibility = Visibility.Hidden;
             }
-            else if (pgb_Energia.Value < 20 && pgb_Energia.Value >= 0)
+            else if ((pgb_Energia.Value < 20 && pgb_Energia.Value >= 0) && !gameOvervar)
             {
                 dormir10_png.Visibility = Visibility.Hidden;
                 dormir50_png.Visibility = Visibility.Hidden;
                 dormir_png.Visibility = Visibility.Visible;
+                if (numCansado == 0) {
+                    AccionCansado();
+                    numCansado++;
+                }
             }
-            else
+            else if (!gameOvervar)
             {
-                dormir10_png.Visibility = Visibility.Visible;
+                numCansado = 0;
+            
+            dormir10_png.Visibility = Visibility.Visible;
                 dormir50_png.Visibility = Visibility.Hidden;
                 dormir_png.Visibility = Visibility.Hidden;            }
 
@@ -259,8 +303,8 @@ namespace DeadPool
             btnDormir.IsHitTestVisible = false;
             t1.Stop();
             String[] mvto = {
-                "Hambre_Barriga",
-                "Hambre_Barra",};
+                "Aburrido_Pancarta",
+                "Aburrido_Barra",};
             Random num = new Random();
             int numero = num.Next(0, mvto.Length);
             Storyboard hambriento;
@@ -284,6 +328,19 @@ namespace DeadPool
             durmiendo.Begin();
            
 
+        }
+
+        private void AccionCansado()
+        {
+            btnComer.IsHitTestVisible = false;
+            btnJugar.IsHitTestVisible = false;
+            btnDormir.IsHitTestVisible = false;
+            t1.Stop();
+            
+            Storyboard sueno;
+            sueno = (Storyboard)this.Resources["Sueno_Cara"];
+            sueno.Completed += Animacion_Completed;
+            sueno.Begin();
         }
 
         private void cargarNuevaProgressBar() {
@@ -321,6 +378,10 @@ namespace DeadPool
         
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
+
+            t = new Thread(() => ejecutarVoz("ADIOOOOOOOS"));
+            t.Start();
+            t.Abort();
             XmlWriterSettings settings = new XmlWriterSettings();
             settings.Indent = true;
             settings.IndentChars = ("    ");
@@ -357,16 +418,20 @@ namespace DeadPool
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            Storyboard disparo;
-            disparo = (Storyboard)this.Resources["DisparoDer"];
+            if (Comprueba_Nick())
+            {
+                Storyboard disparo;
+                disparo = (Storyboard)this.Resources["DisparoDer"];
+
+                disparo.Completed += DisparoDer_Completed;
+                disparos = new MediaPlayer();
+                disparos.Open(new Uri(System.IO.Directory.GetCurrentDirectory() + "\\..\\..\\Resources\\disparo.wav"));
+                disparos.Volume = 0.01;
+                disparos.Play();
+                sonido.Stop();
+                disparo.Begin();
+            }
             
-            disparo.Completed += DisparoDer_Completed;
-            disparos = new MediaPlayer();
-            disparos.Open(new Uri(System.IO.Directory.GetCurrentDirectory() + "\\..\\..\\Resources\\disparo.wav"));
-            disparos.Volume = 0.01;
-            disparos.Play();
-            sonido.Stop();
-            disparo.Begin();
             
         }
 
@@ -385,9 +450,10 @@ namespace DeadPool
             t1 = new DispatcherTimer();
             t1.Interval = TimeSpan.FromSeconds(3.0);
             t1.Tick += new EventHandler(reloj);
-
-
+            
             t1.Start();
+             t = new Thread(() => ejecutarVoz("Hola "+ nombre + ", espero que disfrutes de este juego y no te veas seducido por mi voz... "));
+            t.Start();
             Pizza_icon50_png.Visibility = Visibility.Hidden;
             Pizza_icon10_png.Visibility = Visibility.Hidden;
             Pizza_icon_png.Visibility = Visibility.Visible;
@@ -407,21 +473,24 @@ namespace DeadPool
 
         private void disparo_NuevaPartida(object sender, RoutedEventArgs e)
         {
+
+            if (Comprueba_Nick())
+            {
+                instrumentales.Open(new Uri(System.IO.Directory.GetCurrentDirectory() + "\\..\\..\\Resources\\instrumental.wav"));
+                instrumentales.MediaEnded += new EventHandler(Media_Ended2);
+                instrumentales.Play();
+                Storyboard disparo = (Storyboard)this.Resources["DisparoIzq"];
+
+                disparo.Completed += DisparoIzq_Completed;
+                disparos = new MediaPlayer();
+                disparos.Open(new Uri(System.IO.Directory.GetCurrentDirectory() + "\\..\\..\\Resources\\disparo.wav"));
+                disparos.Volume = 0.01;
+                disparos.Play();
+                sonido.Stop();
+                disparo.Begin();
+            }
+
             
-
-
-            instrumentales.Open(new Uri(System.IO.Directory.GetCurrentDirectory() + "\\..\\..\\Resources\\instrumental.wav"));
-            instrumentales.MediaEnded += new EventHandler(Media_Ended2);
-            instrumentales.Play();
-            Storyboard disparo = (Storyboard)this.Resources["DisparoIzq"];
-
-            disparo.Completed += DisparoIzq_Completed;
-            disparos = new MediaPlayer();
-            disparos.Open(new Uri(System.IO.Directory.GetCurrentDirectory() + "\\..\\..\\Resources\\disparo.wav"));
-            disparos.Volume = 0.01;
-            disparos.Play();
-            sonido.Stop();
-            disparo.Begin();
             
 
         }
@@ -432,9 +501,10 @@ namespace DeadPool
             t1 = new DispatcherTimer();
             t1.Interval = TimeSpan.FromSeconds(3.0);
             t1.Tick += new EventHandler(reloj);
-
-
+            
             t1.Start();
+            t = new Thread(() => ejecutarVoz("Hola " + nombre + ", espero que disfrutes de este juego y no te veas seducido por mi voz..."));
+            t.Start();
             Pizza_icon50_png.Visibility = Visibility.Hidden;
             Pizza_icon10_png.Visibility = Visibility.Hidden;
             Pizza_icon_png.Visibility = Visibility.Visible;
@@ -511,8 +581,8 @@ namespace DeadPool
                 btn_musicaoff.Content = "Activar música de fondo";
             }
             else {
-                sonido.Volume = 0.01;
-                instrumentales.Volume = 0.1;
+                sonido.Volume = 0.1;
+                instrumentales.Volume = 0.3;
                 ImageBrush brush1 = new ImageBrush();
                 BitmapImage image = new BitmapImage(new Uri(System.IO.Directory.GetCurrentDirectory() + "\\..\\..\\Resources\\mute.png"));
                 brush1.ImageSource = image;
@@ -522,15 +592,21 @@ namespace DeadPool
             }
         }
 
-        
-
-      
-
         private void abrir_menuPausa(object sender, RoutedEventArgs e)
         {
             cv_fondopausa.Visibility = Visibility.Visible;
             cv_brpausa.Visibility = Visibility.Visible;
             br_pausa.Visibility = Visibility.Visible;
+            if (gameOvervar == true)
+            {
+                cv_Muerte.Visibility = Visibility.Visible;
+                btn_Pausa.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                cv_Muerte.Visibility = Visibility.Collapsed;
+
+            }
         }
 
         private void Cancelar_Option(object sender, RoutedEventArgs e)
@@ -549,12 +625,49 @@ namespace DeadPool
             cv_fondopausa.Visibility = Visibility.Collapsed;
             cv_brpausa.Visibility = Visibility.Collapsed;
             br_pausa.Visibility = Visibility.Collapsed;
-            DeadPool.Visibility = Visibility.Collapsed;
             Canvas_Inicio.Visibility = Visibility.Visible;
             cargarImagenAleatoriaInicio();
             instrumentales.Stop();
+            if (gameOvervar == true)
+            {
+                cv_Muerte.Visibility = Visibility.Collapsed;
+            }
         
             
         }
+
+        private Boolean Comprueba_Nick()
+        {
+            if (txtNick.Text == "")
+            {
+                MessageBox.Show("No puedes dejar el Nick vacio, por favor introduce tu nombre", "Error", MessageBoxButton.OK, MessageBoxImage.Stop);
+
+                return false;
+            }
+            else
+            {
+                nombre = txtNick.Text;
+                return true;
+            }
+                
+        }
+
+        public void game_Over()
+        {
+            gameOvervar = true;
+            t1.Stop();
+            instrumentales.Stop();
+            cv_Muerte.Visibility = Visibility.Visible;
+            Storyboard muerte;
+            muerte = (Storyboard)this.Resources["GameOver"];
+           // muerte.Completed += katana_Completed;
+            gameOverSound = new MediaPlayer();
+            gameOverSound.Open(new Uri(System.IO.Directory.GetCurrentDirectory() + "\\..\\..\\Resources\\gameOver.wav"));
+            gameOverSound.Volume = 0.1;
+            gameOverSound.Play();
+            muerte.Begin();
+            btn_Pausa.Visibility = Visibility.Visible;
+        }
     }
+     
 }

@@ -1179,6 +1179,83 @@
                 <EasingColorKeyFrame KeyTime="0:0:1.1" Value="#FF46D32A"/>
             </ColorAnimationUsingKeyFrames>
         </Storyboard>
+        <Storyboard x:Key="Sueno_Cara" AutoReverse="True" RepeatBehavior="3x">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)" Storyboard.TargetName="el_OjoIzqBla">
+                <EasingDoubleKeyFrame KeyTime="0:0:1" Value="0.917"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:1.9" Value="0.917"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)" Storyboard.TargetName="el_OjoIzqBla">
+                <EasingDoubleKeyFrame KeyTime="0:0:1" Value="0.323"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:1.9" Value="0.323"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="el_OjoIzqBla">
+                <EasingDoubleKeyFrame KeyTime="0:0:1" Value="3"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:1.1" Value="3.167"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:1.9" Value="3"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" Storyboard.TargetName="el_OjoIzqBla">
+                <EasingDoubleKeyFrame KeyTime="0:0:1" Value="13"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:1.1" Value="12.499"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:1.9" Value="13"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)" Storyboard.TargetName="el_OjoIzqBla">
+                <EasingDoubleKeyFrame KeyTime="0:0:1" Value="-11.979"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:1.9" Value="-11.979"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)" Storyboard.TargetName="el_OjoDerBla">
+                <EasingDoubleKeyFrame KeyTime="0:0:1" Value="0.376"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:1.9" Value="0.376"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.X)" Storyboard.TargetName="el_OjoDerBla">
+                <EasingDoubleKeyFrame KeyTime="0:0:1" Value="3.644"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:1.1" Value="2.69"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:1.9" Value="3.644"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[3].(TranslateTransform.Y)" Storyboard.TargetName="el_OjoDerBla">
+                <EasingDoubleKeyFrame KeyTime="0:0:1" Value="24.878"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:1.1" Value="24.957"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:1.9" Value="24.878"/>
+            </DoubleAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)" Storyboard.TargetName="el_OjoDerBla">
+                <EasingDoubleKeyFrame KeyTime="0:0:1" Value="17.914"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:1.9" Value="17.914"/>
+            </DoubleAnimationUsingKeyFrames>
+            <PointAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransformOrigin)" Storyboard.TargetName="el_OjoDerBla">
+                <EasingPointKeyFrame KeyTime="0:0:1" Value="0.525,0.449"/>
+                <EasingPointKeyFrame KeyTime="0:0:1.9" Value="0.525,0.449"/>
+            </PointAnimationUsingKeyFrames>
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)" Storyboard.TargetName="el_OjoDerBla">
+                <EasingDoubleKeyFrame KeyTime="0:0:1" Value="0.846"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:1.1" Value="0.913"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:1.9" Value="0.846"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="GameOver">
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="txtG">
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.2" Value="{x:Static Visibility.Visible}"/>
+            </ObjectAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="txtA">
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.2" Value="{x:Static Visibility.Visible}"/>
+            </ObjectAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="txtM">
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.4" Value="{x:Static Visibility.Visible}"/>
+            </ObjectAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="txtE">
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.4" Value="{x:Static Visibility.Visible}"/>
+            </ObjectAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="txtO">
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.6" Value="{x:Static Visibility.Visible}"/>
+            </ObjectAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="txtV">
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.6" Value="{x:Static Visibility.Visible}"/>
+            </ObjectAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="txtE1">
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.6" Value="{x:Static Visibility.Visible}"/>
+            </ObjectAnimationUsingKeyFrames>
+            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="txtR">
+                <DiscreteObjectKeyFrame KeyTime="0:0:0.6" Value="{x:Static Visibility.Visible}"/>
+            </ObjectAnimationUsingKeyFrames>
+        </Storyboard>
     </Window.Resources>
     <Window.Triggers>
         <EventTrigger RoutedEvent="FrameworkElement.Loaded" SourceName="cv_Cabeza">
@@ -1231,11 +1308,6 @@
                 <Image x:Name="deadpoolcome_png" Height="124.367" Source="deadpoolcome.png" Stretch="Fill" Width="132.113" RenderTransformOrigin="0.497,0.531"/>
             </Button>
         </Grid>
-        <Button x:Name="btn_VolverInicio" Content="PAUSE" Grid.Column="1" HorizontalAlignment="Right" Height="57.833" Margin="0,0,10,10" VerticalAlignment="Bottom" Width="63" FontSize="16" FontWeight="Bold" Foreground="White" VerticalContentAlignment="Bottom" MouseUp="abrir_menuPausa" Click="abrir_menuPausa">
-            <Button.Background>
-                <ImageBrush ImageSource="pause.png"/>
-            </Button.Background>
-        </Button>
         <Grid x:Name="GridBarras" Height="58.4" Margin="220.6,4,10,0" VerticalAlignment="Top" Grid.Column="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="33*"/>
@@ -1672,17 +1744,10 @@
             <Button x:Name="btn_Accept" Content="ACEPTAR" Height="51.5" Canvas.Left="1111.5" Canvas.Top="665.5" Width="242.5" Foreground="#FF970C0F" Background="#FF111111" FontFamily="Deadpool Movie" FontSize="25" ToolTip="Volver a Inicio" Click="AboutUsAccept_Click"/>
         </Canvas>
         <Canvas x:Name="cv_fondopausa" Grid.ColumnSpan="2" Opacity="0.5" Background="#FFC30000" d:IsHidden="True"/>
-        <Border x:Name="br_pausa" BorderBrush="Black" BorderThickness="10" Grid.Column="1" Margin="462.179,84,417,157" Background="#FF700000">
-            <Canvas x:Name="cv_brpausa" Margin="-10">
-                <Button x:Name="btn_volverInicio" Content="VOLVER A PÁGINA DE INICIO" Height="72" FontSize="24" FontFamily="Deadpool Movie" Canvas.Left="20" Canvas.Top="73.333" Width="383.667" Click="Volver_Inicio"/>
-                <Button x:Name="btn_musicaoff" Content="SILENCIAR MÚSICA" Height="63" Canvas.Left="20" Canvas.Top="206.5" Width="383.667" FontSize="20" FontFamily="Deadpool Movie" Click="btn_Sonido_Click"/>
-                <Button x:Name="btn_cancelar" Content="CANCELAR" Height="58.5" Canvas.Left="20" Canvas.Top="334" Width="383.667" FontSize="24" FontFamily="Deadpool Movie" Click="Cancelar_Option"/>
-            </Canvas>
-        </Border>
 
 
         <Grid x:Name="gr_Inicio" Margin="0,4" Grid.ColumnSpan="2" d:IsHidden="True">
-            <Canvas x:Name="Canvas_Inicio" Margin="0,-4.062,0,-3">
+            <Canvas x:Name="Canvas_Inicio" Margin="0,-4.062,0,-4" d:IsHidden="True">
                 <Canvas.Background>
                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                         <GradientStop Color="#FFD1171B" Offset="1"/>
@@ -1741,10 +1806,33 @@
                         <ImageBrush ImageSource="mute.png"/>
                     </Button.Background>
                 </Button>
-                <TextBlock x:Name="textBlock" Height="61.6" Canvas.Left="657" TextWrapping="Wrap" Canvas.Top="66.242" Width="148.079" FontSize="48" FontFamily="Deadpool Movie"><Run Text="Nic"/><Run Text="k"/></TextBlock>
-                <TextBox x:Name="textBox" Height="54" Canvas.Left="819" TextWrapping="Wrap" Canvas.Top="55.062" Width="469" FontSize="36"/>
+                <TextBlock x:Name="lblNick" Height="61.6" Canvas.Left="657" TextWrapping="Wrap" Canvas.Top="66.242" Width="148.079" FontSize="48" FontFamily="Deadpool Movie"><Run Text="Nic"/><Run Text="k"/></TextBlock>
+                <TextBox x:Name="txtNick" Height="54" Canvas.Left="819" TextWrapping="Wrap" Canvas.Top="55.062" Width="469" FontSize="36"/>
             </Canvas>
         </Grid>
+        <Canvas x:Name="cv_Muerte" Background="#FFFF2626" Grid.ColumnSpan="2" Visibility="Collapsed">
+            <Image x:Name="deadpooldead_jpg" Height="721" Source="deadpooldead.jpg" Stretch="Fill" Width="1364" Opacity="0.8"/>
+            <TextBlock x:Name="txtG" Height="322" Canvas.Left="181" TextWrapping="Wrap" Width="199" FontFamily="Deadpool Movie" FontSize="300" Canvas.Top="72" Text="g" Visibility="Collapsed"/>
+            <TextBlock x:Name="txtA" Height="322" Canvas.Left="418" TextWrapping="Wrap" Width="247" FontFamily="Deadpool Movie" FontSize="300" Canvas.Top="72" Text="a" Visibility="Collapsed"/>
+            <TextBlock x:Name="txtM" Height="322" Canvas.Left="670" TextWrapping="Wrap" Width="322" FontFamily="Deadpool Movie" FontSize="300" Canvas.Top="72" Text="m" Visibility="Collapsed"/>
+            <TextBlock x:Name="txtE" Height="322" Canvas.Left="997" TextWrapping="Wrap" Width="199" FontFamily="Deadpool Movie" FontSize="300" Canvas.Top="72" Text="e" Visibility="Collapsed"/>
+            <TextBlock x:Name="txtO" Height="322" Canvas.Left="220" TextWrapping="Wrap" Width="199" FontFamily="Deadpool Movie" FontSize="300" Canvas.Top="360" Text="o" Visibility="Collapsed"/>
+            <TextBlock x:Name="txtV" Height="322" Canvas.Left="709" TextWrapping="Wrap" Width="199" FontFamily="Deadpool Movie" FontSize="300" Canvas.Top="360" Text="e" Visibility="Collapsed"/>
+            <TextBlock x:Name="txtE1" Height="322" Canvas.Left="943" TextWrapping="Wrap" Width="199" FontFamily="Deadpool Movie" FontSize="300" Canvas.Top="360" Text="r" Visibility="Collapsed"/>
+            <TextBlock x:Name="txtR" Height="322" Canvas.Left="457" TextWrapping="Wrap" Width="199" FontFamily="Deadpool Movie" FontSize="300" Canvas.Top="360" Text="v" Visibility="Collapsed"/>
+        </Canvas>
+        <Border x:Name="br_pausa" BorderBrush="Black" BorderThickness="10" Grid.Column="1" Margin="462.179,84,417,157" Background="#FF700000" d:IsHidden="True">
+            <Canvas x:Name="cv_brpausa" Margin="-10">
+                <Button x:Name="btn_volverInicio" Content="VOLVER A PÁGINA DE INICIO" Height="72" FontSize="24" FontFamily="Deadpool Movie" Canvas.Left="20" Canvas.Top="73.333" Width="383.667" Click="Volver_Inicio"/>
+                <Button x:Name="btn_musicaoff" Content="SILENCIAR MÚSICA" Height="63" Canvas.Left="20" Canvas.Top="206.5" Width="383.667" FontSize="20" FontFamily="Deadpool Movie" Click="btn_Sonido_Click"/>
+                <Button x:Name="btn_cancelar" Content="CANCELAR" Height="58.5" Canvas.Left="20" Canvas.Top="334" Width="383.667" FontSize="24" FontFamily="Deadpool Movie" Click="Cancelar_Option"/>
+            </Canvas>
+        </Border>
+        <Button x:Name="btn_Pausa" Content="PAUSE" Grid.Column="1" HorizontalAlignment="Right" Height="57.833" Margin="0,653.167,10,0" VerticalAlignment="Top" Width="63" FontSize="16" FontWeight="Bold" Foreground="White" VerticalContentAlignment="Bottom" MouseUp="abrir_menuPausa" Click="abrir_menuPausa">
+            <Button.Background>
+                <ImageBrush ImageSource="pause.png"/>
+            </Button.Background>
+        </Button>
 
 
     </Grid>

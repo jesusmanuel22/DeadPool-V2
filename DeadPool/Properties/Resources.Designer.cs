@@ -100,6 +100,15 @@ namespace DeadPool.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.IO.UnmanagedMemoryStream similar a System.IO.MemoryStream.
         /// </summary>
+        internal static System.IO.UnmanagedMemoryStream gameOver {
+            get {
+                return ResourceManager.GetStream("gameOver", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.IO.UnmanagedMemoryStream similar a System.IO.MemoryStream.
+        /// </summary>
         internal static System.IO.UnmanagedMemoryStream introMusic {
             get {
                 return ResourceManager.GetStream("introMusic", resourceCulture);

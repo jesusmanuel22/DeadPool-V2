@@ -22,7 +22,7 @@ namespace DeadPool
     /// </summary>
     public partial class Ahorcado : Window
     {
-
+        Boolean final = false;
         String superhero;
         int fallos;
         int segundos;
@@ -32,6 +32,7 @@ namespace DeadPool
         ProgressBar pb;
         MediaPlayer instrumental;
         MediaPlayer cancion_juego;
+        private MediaPlayer disparos;
         Boolean musica;
 
         public Ahorcado(Button b1, Button b2, Button b3, DispatcherTimer t1, ProgressBar pb, MediaPlayer instrumentales,Boolean sonido)
@@ -203,6 +204,12 @@ namespace DeadPool
                         textBlock_Intentos.Text = "1";
                         break;
                     case 5:
+                        disparos = new MediaPlayer();
+                        disparos.Open(new Uri(System.IO.Directory.GetCurrentDirectory() + "\\..\\..\\Resources\\disparo.wav"));
+                        disparos.Volume = 1;
+                        disparos.Play();
+                        button.Focus();
+                        final = true;
                         image.Source = new BitmapImage(new Uri("cal_deadpoolsf.png", UriKind.Relative));
                         textBlock_Intentos.Text = "GAME OVER";
                         textBox.IsEnabled = false;
@@ -217,17 +224,44 @@ namespace DeadPool
 
         private void button_Click(object sender, RoutedEventArgs e)
         {
-            if (textBox.Text.Length != 0)
+            if (!final)
             {
-                char car = textBox.Text[0];
-                cambiarCaracteres(car);
-                textBox.Text = "";
-                if (completo())
+
+                if (textBox.Text.Length != 0)
                 {
-                    calculapuntos();
-                    image.Source = new BitmapImage(new Uri("deadpool_approbes.png", UriKind.Relative));
-                    textBox.IsEnabled = false;
+
+                    char car = textBox.Text[0];
+                    cambiarCaracteres(car);
+                    textBox.Text = "";
+                    if (completo())
+                    {
+                        calculapuntos();
+                        image.Source = new BitmapImage(new Uri("deadpool_approbes.png", UriKind.Relative));
+                        textBox.IsEnabled = false;
+                        final = true;
+                        button.Focus();
+                    }
+
                 }
+                
+            }
+            else {
+                comer.IsHitTestVisible = true;
+                dormir.IsHitTestVisible = true;
+                jugar.IsHitTestVisible = true;
+                if (musica)
+                {
+                    instrumental.Volume = 0.1;
+
+                }
+                else if (!musica)
+                {
+                    instrumental.Volume = 0;
+                }
+
+                cancion_juego.Stop();
+                t3.Start();
+                this.Close();
             }
 
 
@@ -237,21 +271,47 @@ namespace DeadPool
 
         private void EnterClicked(object sender, KeyEventArgs e)
         {
+
             if (e.Key == Key.Return)
             {
-                if (textBox.Text.Length != 0)
+
+                if (!final)
                 {
-                    char car = textBox.Text[0];
-                    cambiarCaracteres(car);
-                    textBox.Text = "";
-                    if (completo())
+                    if (textBox.Text.Length != 0)
                     {
-                        calculapuntos();
-                        image.Source = new BitmapImage(new Uri("deadpool_approbes.png", UriKind.Relative));
-                        textBox.IsEnabled = false;
+                        char car = textBox.Text[0];
+                        cambiarCaracteres(car);
+                        textBox.Text = "";
+                        if (completo())
+                        {
+                            calculapuntos();
+                            image.Source = new BitmapImage(new Uri("deadpool_approbes.png", UriKind.Relative));
+                            textBox.IsEnabled = false;
+                            final = true;
+                            button.Focus();
+                        }
                     }
+                    e.Handled = true;
+                }else
+                {
+                    comer.IsHitTestVisible = true;
+                    dormir.IsHitTestVisible = true;
+                    jugar.IsHitTestVisible = true;
+                    if (musica)
+                    {
+                        instrumental.Volume = 0.1;
+
+                    }
+                    else if (!musica)
+                    {
+                        instrumental.Volume = 0;
+                    }
+
+                    cancion_juego.Stop();
+                    t3.Start();
+                    this.Close();
                 }
-                e.Handled = true;
+                
             }
         }
 
