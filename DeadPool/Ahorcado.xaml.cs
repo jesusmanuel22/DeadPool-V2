@@ -33,6 +33,7 @@ namespace DeadPool
         MediaPlayer instrumental;
         MediaPlayer cancion_juego;
         private MediaPlayer disparos;
+        private MediaPlayer novamosbien;
         Boolean musica;
 
         public Ahorcado(Button b1, Button b2, Button b3, DispatcherTimer t1, ProgressBar pb, MediaPlayer instrumentales,Boolean sonido)
@@ -208,6 +209,10 @@ namespace DeadPool
                         disparos.Open(new Uri(System.IO.Directory.GetCurrentDirectory() + "\\..\\..\\Resources\\disparo.wav"));
                         disparos.Volume = 1;
                         disparos.Play();
+                        novamosbien = new MediaPlayer();
+                        novamosbien.Open(new Uri(System.IO.Directory.GetCurrentDirectory() + "\\..\\..\\Resources\\minijuegogameover.wav"));
+                        novamosbien.Volume = 1;
+                        novamosbien.Play();
                         button.Focus();
                         final = true;
                         image.Source = new BitmapImage(new Uri("cal_deadpoolsf.png", UriKind.Relative));

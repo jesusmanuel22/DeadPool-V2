@@ -1,0 +1,88 @@
+<?xml version="1.0" standalone="no" ?>
+<!DOCTYPE project PUBLIC "-//audacityproject-1.3.0//DTD//EN" "http://audacity.sourceforge.net/xml/audacityproject-1.3.0.dtd" >
+<project xmlns="http://audacity.sourceforge.net/xml/" projname="gameOver_data" version="1.3.0" audacityversion="2.1.3" sel0="0.5717529316" sel1="0.5717529316" vpos="0" h="0.0000000000" zoom="407.5186800602" rate="44100.0" snapto="off" selectionformat="hh:mm:ss + milliseconds" frequencyformat="Hz" bandwidthformat="octaves">
+	<tags>
+		<tag name="Software" value="File created by GoldWave.  GoldWave copyright (C) Chris Craig"/>
+	</tags>
+	<wavetrack name="Deadpool 3" channel="2" linked="0" mute="0" solo="0" height="150" minimized="0" isSelected="1" rate="48000" gain="1.0" pan="0.0">
+		<waveclip offset="0.00000000">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="211662">
+				<waveblock start="0">
+					<simpleblockfile filename="e0000d4b.au" len="211662" min="-0.178916" max="0.323055" rms="0.025018"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+	</wavetrack>
+	<wavetrack name="disparo" channel="2" linked="0" mute="0" solo="0" height="150" minimized="0" isSelected="0" rate="22050" gain="1.0" pan="0.0">
+		<waveclip offset="0.00000000">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="23383">
+				<waveblock start="0">
+					<simpleblockfile filename="e0000a0e.au" len="23383" min="-1.0" max="0.992188" rms="0.367295"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+	</wavetrack>
+	<wavetrack name="disparo" channel="2" linked="0" mute="0" solo="0" height="150" minimized="0" isSelected="0" rate="22050" gain="1.0" pan="0.0">
+		<waveclip offset="0.32881816">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="1">
+				<waveblock start="0">
+					<simpleblockfile filename="e0000829.au" len="1" min="-0.046875" max="-0.046875" rms="0.046875"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+		<waveclip offset="0.00000000">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="7250">
+				<waveblock start="0">
+					<simpleblockfile filename="e0000424.au" len="7250" min="0.0" max="0.0" rms="0.0"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="1">
+				<controlpoint t="0.328752834467" val="1.000000000000"/>
+			</envelope>
+		</waveclip>
+		<waveclip offset="0.32879819">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="1">
+				<waveblock start="0">
+					<simpleblockfile filename="e00001c2.au" len="1" min="0.0" max="0.0" rms="0.0"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="1">
+				<controlpoint t="0.000000000000" val="1.000000000000"/>
+			</envelope>
+		</waveclip>
+		<waveclip offset="0.32886351">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="23382">
+				<waveblock start="0">
+					<simpleblockfile filename="e0000bfb.au" len="23382" min="-1.0" max="0.992188" rms="0.367303"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="1">
+				<controlpoint t="0.000000000000" val="1.000000000000"/>
+			</envelope>
+		</waveclip>
+	</wavetrack>
+	<wavetrack name="disparo" channel="2" linked="0" mute="0" solo="0" height="150" minimized="0" isSelected="0" rate="22050" gain="1.0" pan="0.0">
+		<waveclip offset="0.58156192">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="23383">
+				<waveblock start="0">
+					<simpleblockfile filename="e0000a0e.au" len="23383" min="-1.0" max="0.992188" rms="0.367295"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+		<waveclip offset="0.00000000">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="12824">
+				<waveblock start="0">
+					<simpleblockfile filename="e0000789.au" len="10605" min="0.0" max="0.0" rms="0.0"/>
+				</waveblock>
+				<waveblock start="10605">
+					<simpleblockfile filename="e000061c.au" len="2219" min="0.0" max="0.0" rms="0.0"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+	</wavetrack>
+</project>

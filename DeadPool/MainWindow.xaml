@@ -1734,6 +1734,17 @@
                 </Image.RenderTransform>
             </Image>
         </Canvas>
+        <Canvas x:Name="cv_Muerte" Background="#FFFF2626" Grid.ColumnSpan="2" Visibility="Collapsed">
+            <Image x:Name="deadpooldead_jpg" Height="721" Source="deadpooldead.jpg" Stretch="Fill" Width="1364" Opacity="0.8"/>
+            <TextBlock x:Name="txtG" Height="322" Canvas.Left="181" TextWrapping="Wrap" Width="199" FontFamily="Deadpool Movie" FontSize="300" Canvas.Top="72" Text="g" Visibility="Collapsed"/>
+            <TextBlock x:Name="txtA" Height="322" Canvas.Left="418" TextWrapping="Wrap" Width="247" FontFamily="Deadpool Movie" FontSize="300" Canvas.Top="72" Text="a" Visibility="Collapsed"/>
+            <TextBlock x:Name="txtM" Height="322" Canvas.Left="670" TextWrapping="Wrap" Width="322" FontFamily="Deadpool Movie" FontSize="300" Canvas.Top="72" Text="m" Visibility="Collapsed"/>
+            <TextBlock x:Name="txtE" Height="322" Canvas.Left="997" TextWrapping="Wrap" Width="199" FontFamily="Deadpool Movie" FontSize="300" Canvas.Top="72" Text="e" Visibility="Collapsed"/>
+            <TextBlock x:Name="txtO" Height="322" Canvas.Left="220" TextWrapping="Wrap" Width="199" FontFamily="Deadpool Movie" FontSize="300" Canvas.Top="360" Text="o" Visibility="Collapsed"/>
+            <TextBlock x:Name="txtV" Height="322" Canvas.Left="709" TextWrapping="Wrap" Width="199" FontFamily="Deadpool Movie" FontSize="300" Canvas.Top="360" Text="e" Visibility="Collapsed"/>
+            <TextBlock x:Name="txtE1" Height="322" Canvas.Left="943" TextWrapping="Wrap" Width="199" FontFamily="Deadpool Movie" FontSize="300" Canvas.Top="360" Text="r" Visibility="Collapsed"/>
+            <TextBlock x:Name="txtR" Height="322" Canvas.Left="457" TextWrapping="Wrap" Width="199" FontFamily="Deadpool Movie" FontSize="300" Canvas.Top="360" Text="v" Visibility="Collapsed"/>
+        </Canvas>
         <Canvas x:Name="cv_AboutUs" Grid.ColumnSpan="2" d:IsLocked="True" d:IsHidden="True">
             <Canvas.Background>
                 <ImageBrush ImageSource="sobrenosotroswp.jpg" Stretch="None"/>
@@ -1810,18 +1821,7 @@
                 <TextBox x:Name="txtNick" Height="54" Canvas.Left="819" TextWrapping="Wrap" Canvas.Top="55.062" Width="469" FontSize="36"/>
             </Canvas>
         </Grid>
-        <Canvas x:Name="cv_Muerte" Background="#FFFF2626" Grid.ColumnSpan="2" Visibility="Collapsed">
-            <Image x:Name="deadpooldead_jpg" Height="721" Source="deadpooldead.jpg" Stretch="Fill" Width="1364" Opacity="0.8"/>
-            <TextBlock x:Name="txtG" Height="322" Canvas.Left="181" TextWrapping="Wrap" Width="199" FontFamily="Deadpool Movie" FontSize="300" Canvas.Top="72" Text="g" Visibility="Collapsed"/>
-            <TextBlock x:Name="txtA" Height="322" Canvas.Left="418" TextWrapping="Wrap" Width="247" FontFamily="Deadpool Movie" FontSize="300" Canvas.Top="72" Text="a" Visibility="Collapsed"/>
-            <TextBlock x:Name="txtM" Height="322" Canvas.Left="670" TextWrapping="Wrap" Width="322" FontFamily="Deadpool Movie" FontSize="300" Canvas.Top="72" Text="m" Visibility="Collapsed"/>
-            <TextBlock x:Name="txtE" Height="322" Canvas.Left="997" TextWrapping="Wrap" Width="199" FontFamily="Deadpool Movie" FontSize="300" Canvas.Top="72" Text="e" Visibility="Collapsed"/>
-            <TextBlock x:Name="txtO" Height="322" Canvas.Left="220" TextWrapping="Wrap" Width="199" FontFamily="Deadpool Movie" FontSize="300" Canvas.Top="360" Text="o" Visibility="Collapsed"/>
-            <TextBlock x:Name="txtV" Height="322" Canvas.Left="709" TextWrapping="Wrap" Width="199" FontFamily="Deadpool Movie" FontSize="300" Canvas.Top="360" Text="e" Visibility="Collapsed"/>
-            <TextBlock x:Name="txtE1" Height="322" Canvas.Left="943" TextWrapping="Wrap" Width="199" FontFamily="Deadpool Movie" FontSize="300" Canvas.Top="360" Text="r" Visibility="Collapsed"/>
-            <TextBlock x:Name="txtR" Height="322" Canvas.Left="457" TextWrapping="Wrap" Width="199" FontFamily="Deadpool Movie" FontSize="300" Canvas.Top="360" Text="v" Visibility="Collapsed"/>
-        </Canvas>
-        <Border x:Name="br_pausa" BorderBrush="Black" BorderThickness="10" Grid.Column="1" Margin="462.179,84,417,157" Background="#FF700000" d:IsHidden="True">
+        <Border x:Name="br_pausa" BorderBrush="Black" BorderThickness="10" Grid.Column="1" Margin="462.179,84,417,157" Background="#FF700000">
             <Canvas x:Name="cv_brpausa" Margin="-10">
                 <Button x:Name="btn_volverInicio" Content="VOLVER A PÁGINA DE INICIO" Height="72" FontSize="24" FontFamily="Deadpool Movie" Canvas.Left="20" Canvas.Top="73.333" Width="383.667" Click="Volver_Inicio"/>
                 <Button x:Name="btn_musicaoff" Content="SILENCIAR MÚSICA" Height="63" Canvas.Left="20" Canvas.Top="206.5" Width="383.667" FontSize="20" FontFamily="Deadpool Movie" Click="btn_Sonido_Click"/>
