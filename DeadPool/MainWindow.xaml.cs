@@ -19,6 +19,7 @@ using System.Xml;
 using System.Threading;
 using System.IO;
 using System.Speech.Synthesis;
+using System.Speech.Recognition;
 
 namespace DeadPool
 {
@@ -45,10 +46,10 @@ namespace DeadPool
         private Thread t;
         private Boolean Nueva_Partida;
         private Boolean Continuar_Partida;
-
-        public void IntroducirNombre() {
-            
-        }
+        private SpeechRecognitionEngine voz;
+        String hora;
+        ImageBrush brush1;
+        BitmapImage image;
 
         public MainWindow()
         {
@@ -62,9 +63,10 @@ namespace DeadPool
             synthesizer.Rate = 1;
             Nueva_Partida=true;
             Continuar_Partida=true;
-
-        MessageBox.Show("AVISO, esta aplicación contiene música, para proteger su integridad auditiva le rogamos que baje el volumen y suba progresivamente hasta donde usted vea conveniente\n Muchas gracias\n ¡¡CHIMICHANGAS!!", "ALERT!!", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-
+            btn_Microfono.ToolTip = "Activar control voz";
+            lblNick.Focus();
+            MessageBox.Show("AVISO, esta aplicación contiene música, para proteger su integridad auditiva le rogamos que baje el volumen y suba progresivamente hasta donde usted vea conveniente\n Muchas gracias\n ¡¡CHIMICHANGAS!!", "ALERT!!", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+            cargarDiccionario();
             cargarImagenAleatoriaInicio();
             inic_App();
             btn_Pausa.Visibility = Visibility.Hidden;
@@ -76,6 +78,207 @@ namespace DeadPool
             instrumentales.Volume = 0.3;
             btn_musicaoff.Content = "Desactivar música de fondo";
             cargarProgressBar();
+            btn_Pausa.Visibility = Visibility.Hidden;
+        }
+
+        private void cargarDiccionario()
+        {
+            voz = new SpeechRecognitionEngine();
+            Choices comandos = new Choices();
+            comandos.Add(new string[] {
+                "come",
+                "ahorcado",
+                "juego",
+                "juega",
+                "habla",
+                "cuentame algo",
+                "hola espiderman",
+                "hora",
+                "que hora es",
+                "da vueltas", "haz un truco",
+                "que dia es hoy",
+                "a que estamos",
+                "espiderman" ,
+            "duerme", "quitate la máscara","ponte la máscara", "saluda","a comer","saca las espadas"});
+            GrammarBuilder gBuilder = new GrammarBuilder();
+            gBuilder.Append(comandos);
+            Grammar grammar = new Grammar(gBuilder);
+            voz.LoadGrammarAsync(grammar);
+            voz.SetInputToDefaultAudioDevice();
+            voz.SpeechRecognized += voz_SpeechRecognized;
+             brush1 = new ImageBrush();
+             image = new BitmapImage(new Uri(System.IO.Directory.GetCurrentDirectory() + "\\..\\..\\Images\\microbt.png"));
+            brush1.ImageSource = image;
+            btn_Microfono.Background = brush1;
+        }
+
+        private void btnMicrofono_Click(object sender, RoutedEventArgs e)
+        {
+            if(btn_Microfono.ToolTip=="Activar control voz")
+            {
+                btn_Microfono.ToolTip = "Desactivar control voz";
+                voz.RecognizeAsync(RecognizeMode.Multiple);
+                 brush1 = new ImageBrush();
+                 image = new BitmapImage(new Uri(System.IO.Directory.GetCurrentDirectory() + "\\..\\..\\Images\\microb.png"));
+                brush1.ImageSource = image;
+                btn_Microfono.Background = brush1;
+                
+
+            }
+           else
+            {
+                voz.RecognizeAsyncStop();
+                btn_Microfono.ToolTip = "Activar control voz";
+                 brush1 = new ImageBrush();
+                 image = new BitmapImage(new Uri(System.IO.Directory.GetCurrentDirectory() + "\\..\\..\\Images\\microbt.png"));
+                brush1.ImageSource = image;
+                btn_Microfono.Background = brush1;
+            }
+        }
+
+        private void voz_SpeechRecognized(object sender, SpeechRecognizedEventArgs e)
+        {
+            voz.RecognizeAsyncStop();
+            btn_Microfono.ToolTip = "Activar control voz";
+            brush1 = new ImageBrush();
+            image = new BitmapImage(new Uri(System.IO.Directory.GetCurrentDirectory() + "\\..\\..\\Images\\microbt.png"));
+            brush1.ImageSource = image;
+            btn_Microfono.Background = brush1;
+            switch (e.Result.Text)
+            {
+                case "come":
+                case "a comer":
+                    if (pgb_Hambre.Value <= 50)
+                    {
+                        pgb_Hambre.Value += 70;
+
+                        Accion_comer();
+                    }else
+                    {
+                        t = new Thread(() => ejecutarVoz("no tengo hambre " ));
+
+                        t.Start();
+                    }
+                    
+                    break;
+
+                case "ahorcado":
+                case "juega":
+                case "juego":
+                    btnComer.IsHitTestVisible = false;
+                    btnJugar.IsHitTestVisible = false;
+                    btnDormir.IsHitTestVisible = false;
+                    t1.Stop();
+                   
+                    ahorcado = new Ahorcado(this.btnComer, this.btnDormir, this.btnJugar, this.t1, this.pgb_Diversion, this.instrumentales, musica);
+                    ahorcado.Show();
+                    break;
+                case "hora": case "que hora es": 
+                   hora= DateTime.Now.ToString("hh:mm");
+                    t = new Thread(() => ejecutarVoz("Ahora mismo son las "+hora));
+
+                    t.Start();
+                   
+                    break;
+                case "hola espiderman":
+                case "espiderman":
+                    t = new Thread(() => ejecutarVoz("Que soy dedpul bobo " ));
+
+                    t.Start();
+                    break;
+                case "duerme":
+                    if (pgb_Energia.Value <= 40)
+                    {
+                        pgb_Energia.Value += 100.0;
+
+                        Accion_Dormir();
+                    }
+                    else
+                    {
+                        t = new Thread(() => ejecutarVoz("no tengo sueño, estoy on faie "));
+
+                        t.Start();
+                    }
+                    break;
+                case "habla":
+                    t = new Thread(() => ejecutarVoz("Muchos piensan que Lobezno me ganaría pero ni de coña. "));
+
+                    t.Start();
+                    break;
+                case "que dia es hoy":
+                case "a que estamos":
+                    hora = DateTime.Now.ToString("dd - MMMM - yyyy");
+                    t = new Thread(() => ejecutarVoz("Hoy es " + hora));
+
+                    t.Start();
+                    break;
+                case "da vueltas":
+                 case "haz un truco":
+                    voltereta();
+                    break;
+                
+                case "quitate la máscara":
+                case "que escondes":
+                    if(Mascara_png.Visibility == Visibility.Collapsed)
+                    {
+                        Mascara_png.Visibility = Visibility.Visible;
+                        t = new Thread(() => ejecutarVoz("Sorpresa !!! soy Logan"));
+                        t.Start();
+                    }
+                    else
+                    {
+                        t = new Thread(() => ejecutarVoz("¿Acaso eres ciego?, Ya no la tengo puesta" ));
+                        t.Start();
+                    }
+                        
+                    break;
+
+                case "ponte la máscara":
+                    if (Mascara_png.Visibility == Visibility.Collapsed)
+                    {
+                        t = new Thread(() => ejecutarVoz("Ya la tengo puesta !!!"));
+                        t.Start();
+                    }
+                    else
+                    {
+                        Mascara_png.Visibility = Visibility.Collapsed;
+                        t = new Thread(() => ejecutarVoz("Muuucho mejor"));
+                        t.Start();
+                    }
+
+                    break;
+
+                case "saluda":
+                    t1.Stop();
+                    btnComer.IsHitTestVisible = false;
+                    btnJugar.IsHitTestVisible = false;
+                    btnDormir.IsHitTestVisible = false;
+                    Storyboard espada;
+                    espada = (Storyboard)this.Resources["Espada"];
+
+                    espada.Completed += Animacion_Completed;
+
+                    espada.Begin();
+                    break;
+                case "saca las espadas":
+                    t1.Stop();
+                    btnComer.IsHitTestVisible = false;
+                    btnJugar.IsHitTestVisible = false;
+                    btnDormir.IsHitTestVisible = false;
+                    Storyboard espada2;
+                    espada2 = (Storyboard)this.Resources["Espada"];
+
+                    espada2.Completed += Animacion_Completed;
+                    Storyboard espada3;
+                    espada3 = (Storyboard)this.Resources["EspadaEnfado"];
+
+                    espada3.Completed += Animacion_Completed;
+                    espada2.Begin();
+                    espada3.Begin();
+                    break;
+
+            }
+            
         }
 
         private void ejecutarVoz(string frase)
@@ -137,7 +340,7 @@ namespace DeadPool
                 Pizza_icon50_png.Visibility = Visibility.Hidden;
                 Pizza_icon10_png.Visibility = Visibility.Visible;
                 Pizza_icon_png.Visibility = Visibility.Hidden;
-                if (numhambre == 0)
+                if (numhambre == 0 && pgb_Hambre.Value == 20)
                 {
                     t = new Thread(() => ejecutarVoz("¿En serio tengo que repetirte que tengo hambre? CHIMICHANGAS EVRYWHERE"));
                     t.Start();
@@ -157,23 +360,28 @@ namespace DeadPool
             
             if ((pgb_Diversion.Value < 50 && pgb_Diversion.Value >= 20)&& !gameOvervar)
             {
-                numaburrimiento = 0;
+                
                 balon_10_png.Visibility = Visibility.Hidden;
                 balon_50_png.Visibility = Visibility.Visible;
                 balon_png.Visibility = Visibility.Hidden;
+                if (pgb_Diversion.Value == 30)
+                {
+                    if (numaburrimiento == 0)
+                    {
+                        t = new Thread(() => ejecutarVoz("Me estoy empezando a aburrir..."));
+                        t.Start();
+                        Accion_aburrido();
+                        numaburrimiento++;
+                    }
+                }
             }
             else if ((pgb_Diversion.Value < 20 && pgb_Diversion.Value >= 0) && !gameOvervar)
             {
-                
+                numaburrimiento = 0;
                 balon_10_png.Visibility = Visibility.Visible;
                 balon_50_png.Visibility = Visibility.Hidden;
                 balon_png.Visibility = Visibility.Hidden;
-                if (numaburrimiento == 0) {
-                    t = new Thread(() => ejecutarVoz("Me estoy empezando a aburrir..."));
-                    t.Start();
-                    Accion_aburrido();
-                    numaburrimiento++;
-                }
+                
             }
             else if(!gameOvervar)
             {
@@ -187,20 +395,27 @@ namespace DeadPool
             numCansado = 0;
             if ((pgb_Energia.Value < 50 && pgb_Energia.Value >= 20) && !gameOvervar)
             {
-                numCansado = 0;
+               
                 dormir10_png.Visibility = Visibility.Hidden;
                 dormir50_png.Visibility = Visibility.Visible;
                 dormir_png.Visibility = Visibility.Hidden;
+                if (pgb_Energia.Value == 30)
+                {
+                    if (numaburrimiento == 0)
+                    {
+                        t = new Thread(() => ejecutarVoz(nombre+", estoy cansado..."));
+                        t.Start();
+                        AccionCansado();
+                        numCansado++;
+                    }
+                }
             }
             else if ((pgb_Energia.Value < 20 && pgb_Energia.Value >= 0) && !gameOvervar)
             {
                 dormir10_png.Visibility = Visibility.Hidden;
                 dormir50_png.Visibility = Visibility.Hidden;
                 dormir_png.Visibility = Visibility.Visible;
-                if (numCansado == 0) {
-                    AccionCansado();
-                    numCansado++;
-                }
+                numCansado = 0;
             }
             else if (!gameOvervar)
             {
@@ -208,30 +423,44 @@ namespace DeadPool
             
             dormir10_png.Visibility = Visibility.Visible;
                 dormir50_png.Visibility = Visibility.Hidden;
-                dormir_png.Visibility = Visibility.Hidden;            }
-
-
-
-
+                dormir_png.Visibility = Visibility.Hidden;
+            }
         }
 
         private void btnComer_Click(object sender, RoutedEventArgs e)
         {
-            if (pgb_Hambre.Value <= 50) {
-                pgb_Hambre.Value += 100.0;
-                
+            if (pgb_Hambre.Value <= 50)
+            {
+                pgb_Hambre.Value += 70;
+
                 Accion_comer();
             }
+            else
+            {
+                t = new Thread(() => ejecutarVoz("no tengo hambre "+nombre));
 
-           
+                t.Start();
+            }
+
+
         }
 
         private void btnJugar_Click(object sender, RoutedEventArgs e)
         {
             btnComer.IsHitTestVisible = false;
+            btnComer.ToolTip = "Cierre el ahorcado";
             btnJugar.IsHitTestVisible = false;
+            btnJugar.ToolTip = "Cierre el ahorcado";
             btnDormir.IsHitTestVisible = false;
+            btnDormir.ToolTip = "Cierre el ahorcado";
             t1.Stop();
+            voz.RecognizeAsyncStop();
+            btn_Microfono.ToolTip = "Activar control voz";
+            ImageBrush brush1 = new ImageBrush();
+            BitmapImage image = new BitmapImage(new Uri(System.IO.Directory.GetCurrentDirectory() + "\\..\\..\\Images\\microbt.png"));
+            brush1.ImageSource = image;
+            btn_Microfono.Background = brush1;
+            
             ahorcado = new Ahorcado(this.btnComer,this.btnDormir,this.btnJugar,this.t1, this.pgb_Diversion,this.instrumentales,musica);
             ahorcado.Show();
             
@@ -240,8 +469,19 @@ namespace DeadPool
 
         private void btnDormir_Click(object sender, RoutedEventArgs e)
         {
-            pgb_Energia.Value += 35.0;
-            Accion_Dormir();
+            if (pgb_Energia.Value < 40)
+            {
+
+                pgb_Energia.Value += 100.0;
+                Accion_Dormir();
+            }
+            else
+            {
+                t = new Thread(() => ejecutarVoz("no tengo sueño, "+nombre));
+
+                t.Start();
+
+            }
         }
         
         private void el_cabeza_MouseUp(object sender, MouseButtonEventArgs e)
@@ -252,7 +492,7 @@ namespace DeadPool
         
         private void Mascara_png_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            Mascara_png.Visibility = Visibility.Hidden;
+            Mascara_png.Visibility = Visibility.Collapsed;
         }
 
         private void Rectangle_MouseUp(object sender, MouseButtonEventArgs e)
@@ -271,9 +511,13 @@ namespace DeadPool
 
         private void Accion_comer()
         {
+            
             btnComer.IsHitTestVisible = false;
+            btnComer.ToolTip = "No puedes dar de comer hasta que termine la animación";
             btnJugar.IsHitTestVisible = false;
+            btnJugar.ToolTip = "No puedes jugar hasta que termine la animación";
             btnDormir.IsHitTestVisible = false;
+            btnDormir.ToolTip = "No puedes dormir hasta que termine la animación";
             Storyboard comiendo;
             comiendo = (Storyboard)this.Resources["Comiendo"];
             t1.Stop();
@@ -287,8 +531,11 @@ namespace DeadPool
         private void Accion_hambre()
         {
             btnComer.IsHitTestVisible = false;
+            btnComer.ToolTip = "No puedes dar de comer hasta que termine la animación";
             btnJugar.IsHitTestVisible = false;
+            btnJugar.ToolTip = "No puedes jugar hasta que termine la animación";
             btnDormir.IsHitTestVisible = false;
+            btnDormir.ToolTip = "No puedes dormir hasta que termine la animación";
             String[] mvto = {
                 "Hambre_Barriga",
                 "Hambre_Barra",};
@@ -305,8 +552,11 @@ namespace DeadPool
         private void Accion_aburrido()
         {
             btnComer.IsHitTestVisible = false;
+            btnComer.ToolTip = "No puedes dar de comer hasta que termine la animación";
             btnJugar.IsHitTestVisible = false;
+            btnJugar.ToolTip = "No puedes jugar hasta que termine la animación";
             btnDormir.IsHitTestVisible = false;
+            btnDormir.ToolTip = "No puedes dormir hasta que termine la animación";
             t1.Stop();
             String[] mvto = {
                 "Aburrido_Pancarta",
@@ -322,8 +572,11 @@ namespace DeadPool
         private void Accion_Dormir()
         {
             btnComer.IsHitTestVisible = false;
+            btnComer.ToolTip = "No puedes dar de comer hasta que termine la animación";
             btnJugar.IsHitTestVisible = false;
+            btnJugar.ToolTip = "No puedes jugar hasta que termine la animación";
             btnDormir.IsHitTestVisible = false;
+            btnDormir.ToolTip = "No puedes dormir hasta que termine la animación";
             Storyboard durmiendo;
             durmiendo = (Storyboard)this.Resources["Dormir"];
             t1.Stop();
@@ -339,10 +592,12 @@ namespace DeadPool
         private void AccionCansado()
         {
             btnComer.IsHitTestVisible = false;
+            btnComer.ToolTip = "No puedes dar de comer hasta que termine la animación";
             btnJugar.IsHitTestVisible = false;
+            btnJugar.ToolTip = "No puedes jugar hasta que termine la animación";
             btnDormir.IsHitTestVisible = false;
+            btnDormir.ToolTip = "No puedes dormir hasta que termine la animación";
             t1.Stop();
-            
             Storyboard sueno;
             sueno = (Storyboard)this.Resources["Sueno_Cara"];
             sueno.Completed += Animacion_Completed;
@@ -384,6 +639,15 @@ namespace DeadPool
                         if (aux == 0) { btn_Continue.IsEnabled = false; }
                         pgb_Energia.Value = aux;
                     }
+                    if (myXMLreader.Name == "Nombre")
+                    {if(!(pgb_Diversion.Value==0 || pgb_Energia.Value == 0 || pgb_Hambre.Value == 0))
+                        {
+                            myXMLreader.Read();
+                            nombre = myXMLreader.ReadContentAsString();
+                            txtNick.Text = nombre;
+                        }
+                        
+                    }
                 }
             }
             myXMLreader.Close();
@@ -391,31 +655,51 @@ namespace DeadPool
         
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-
-            t = new Thread(() => ejecutarVoz("ADIOOOOOOOS"));
-            t.Start();
-            t.Abort();
-            XmlWriterSettings settings = new XmlWriterSettings();
-            settings.Indent = true;
-            settings.IndentChars = ("    ");
-            using (XmlWriter writer = XmlWriter.Create("Persistencia.xml", settings))
+            if (MessageBox.Show("¿Estás seguro de que desea cerrar la ventana?\n El progreso se guardará automáticamente", "Cerrar",
+                   MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
             {
-                writer.WriteStartElement("Atributos");
-                writer.WriteElementString("Comida", pgb_Hambre.Value + "");
-                writer.WriteElementString("Energia", pgb_Energia.Value + "");
-                writer.WriteElementString("Diversion", pgb_Diversion.Value + "");
-                writer.WriteEndElement();
-                writer.Flush();
+
+                
+
+                t = new Thread(() => ejecutarVoz("Buen rollo y Chimichangas!!"));
+                t.Start();
+                t.Abort();
+                XmlWriterSettings settings = new XmlWriterSettings();
+                settings.Indent = true;
+                settings.IndentChars = ("    ");
+                using (XmlWriter writer = XmlWriter.Create("Persistencia.xml", settings))
+                {
+                    writer.WriteStartElement("Atributos");
+                    writer.WriteElementString("Comida", pgb_Hambre.Value + "");
+                    writer.WriteElementString("Energia", pgb_Energia.Value + "");
+                    writer.WriteElementString("Diversion", pgb_Diversion.Value + "");
+                    if (nombre == null)
+                    {
+                        writer.WriteElementString("Nombre",  "Nombre");
+                        writer.WriteEndElement();
+                        writer.Flush();
+                    }
+                    else
+                    {
+                        writer.WriteElementString("Nombre", nombre.ToString() + "");
+                        writer.WriteEndElement();
+                        writer.Flush();
+                    }
+                }
+                try
+                {
+                    ahorcado.Close();
+                }
+                catch (Exception exc)
+                {
+
+                }
                 // writer.Close();
-            }
 
-            try
-            {
-                ahorcado.Close();
-            }
-            catch (Exception exc)
-            {
 
+            }else
+            {
+                e.Cancel=true;
             }
            
         }
@@ -425,8 +709,11 @@ namespace DeadPool
 
             t1.Start();
             btnComer.IsHitTestVisible = true;
+            btnComer.ToolTip = "Dar de comer";
             btnJugar.IsHitTestVisible = true;
+            btnJugar.ToolTip = "Jugar al ahorcado";
             btnDormir.IsHitTestVisible = true;
+            btnDormir.ToolTip = "Descansar";
         }
 
         private void button_Click(object sender, RoutedEventArgs e)
@@ -445,6 +732,7 @@ namespace DeadPool
                     disparos.Play();
                     sonido.Stop();
                     disparo.Begin();
+                    btn_Pausa.Visibility = Visibility.Visible;
                 }
             }
             
@@ -470,7 +758,7 @@ namespace DeadPool
                 t1.Start();
             if (Continuar_Partida)
             {
-                t = new Thread(() => ejecutarVoz("Hola " + nombre + ",De regreso hijo de puta "));
+                t = new Thread(() => ejecutarVoz("Hola " + nombre + ", cuánto me alegro tenerte de nuevo por aquí "));
 
                 t.Start();
                 Continuar_Partida = false;
@@ -527,7 +815,7 @@ namespace DeadPool
             t1.Start();
             if (Nueva_Partida)
             {
-                t = new Thread(() => ejecutarVoz("Hola " + nombre + ", espero que disfrutes de este juego y no te veas seducido por mi voz..."));
+                t = new Thread(() => ejecutarVoz("Hola " + nombre + ", espero que disfrutes de este juego y no te veas seducido por mi voz... En este juego tendrás que conseguir que ninguna de mis necesidades lleguen a 0, ¡¡A disfrutar MADAFAKAS!!"));
 
                 t.Start();
                 Nueva_Partida = false;
@@ -706,6 +994,7 @@ namespace DeadPool
 
         public void game_Over()
         {
+            voz.RecognizeAsyncStop();
             gameOvervar = true;
             t1.Stop();
             instrumentales.Stop();
@@ -717,6 +1006,7 @@ namespace DeadPool
             gameOverSound.Open(new Uri(System.IO.Directory.GetCurrentDirectory() + "\\..\\..\\Resources\\gameOver.wav"));
             gameOverSound.Volume = 0.1;
             gameOverSound.Play();
+            btn_Continue.IsHitTestVisible = false;
             muerte.Begin();
             XmlWriterSettings settings = new XmlWriterSettings();
             settings.Indent = true;
@@ -732,6 +1022,18 @@ namespace DeadPool
                 // writer.Close();
             }
             //btn_Pausa.Visibility = Visibility.Hidden;
+        }
+
+        public void voltereta()
+        {
+            t1.Stop();
+            btnComer.IsHitTestVisible = false;
+            btnDormir.IsHitTestVisible = false;
+            btnJugar.IsHitTestVisible = false;
+            Storyboard voltereta;
+            voltereta = (Storyboard)this.Resources["volteretas"];
+            voltereta.Completed += Animacion_Completed;
+            voltereta.Begin();
         }
     }
      

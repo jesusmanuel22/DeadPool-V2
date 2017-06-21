@@ -1256,6 +1256,15 @@
                 <DiscreteObjectKeyFrame KeyTime="0:0:0.6" Value="{x:Static Visibility.Visible}"/>
             </ObjectAnimationUsingKeyFrames>
         </Storyboard>
+        <Storyboard x:Key="volteretas" AutoReverse="False">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)" Storyboard.TargetName="DeadPool">
+                <EasingDoubleKeyFrame KeyTime="0:0:0.2" Value="46.831"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.7" Value="120.607"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:1.2" Value="212.283"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:1.6" Value="309.29"/>
+                <EasingDoubleKeyFrame KeyTime="0:0:2" Value="360"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
     </Window.Resources>
     <Window.Triggers>
         <EventTrigger RoutedEvent="FrameworkElement.Loaded" SourceName="cv_Cabeza">
@@ -1345,7 +1354,7 @@
             <Image x:Name="dormir50_png" Grid.Column="2" Margin="6,7,0,7.9" Source="dormir50.png" Stretch="Fill" HorizontalAlignment="Left" Width="43.5" RenderTransformOrigin="0.5,0.5"/>
             <Image x:Name="dormir10_png" Grid.Column="2" Margin="6,7,0,7.9" Source="dormir10.png" Stretch="Fill" HorizontalAlignment="Left" Width="43.5" RenderTransformOrigin="0.5,0.5"/>
         </Grid>
-        <Canvas x:Name="DeadPool" Margin="545.267,61.4,10,6" RenderTransformOrigin="0.5,0.5" Grid.Column="1">
+        <Canvas x:Name="DeadPool" Margin="545.267,61.4,10,6" RenderTransformOrigin="0.159,0.466" Grid.Column="1">
             <Canvas.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -1688,6 +1697,11 @@
             </Canvas>
 
         </Canvas>
+        <Button x:Name="btn_Microfono" Content="" Height="67.984" Click="btnMicrofono_Click" ToolTip="Activar control voz" Grid.Column="1" Margin="0,0,16,140.5" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="57" BorderBrush="{x:Null}">
+            <Button.Background>
+                <ImageBrush ImageSource="microbt.png"/>
+            </Button.Background>
+        </Button>
         <Canvas x:Name="cv_comida" HorizontalAlignment="Left" Height="295.986" Margin="295.6,0,0,-333.986" VerticalAlignment="Bottom" Width="328.5" RenderTransformOrigin="0.5,0.5" Grid.Column="1" d:IsLocked="True">
             <Canvas.RenderTransform>
                 <TransformGroup>
@@ -1734,7 +1748,7 @@
                 </Image.RenderTransform>
             </Image>
         </Canvas>
-        <Canvas x:Name="cv_Muerte" Background="#FFFF2626" Grid.ColumnSpan="2" Visibility="Collapsed">
+        <Canvas x:Name="cv_Muerte" Background="#FFFF2626" Grid.ColumnSpan="2" Visibility="Collapsed" d:IsHidden="True">
             <Image x:Name="deadpooldead_jpg" Height="721" Source="deadpooldead.jpg" Stretch="Fill" Width="1364" Opacity="0.8"/>
             <TextBlock x:Name="txtG" Height="322" Canvas.Left="181" TextWrapping="Wrap" Width="199" FontFamily="Deadpool Movie" FontSize="300" Canvas.Top="72" Text="g" Visibility="Collapsed"/>
             <TextBlock x:Name="txtA" Height="322" Canvas.Left="418" TextWrapping="Wrap" Width="247" FontFamily="Deadpool Movie" FontSize="300" Canvas.Top="72" Text="a" Visibility="Collapsed"/>
@@ -1809,10 +1823,10 @@
                         </Image.RenderTransform>
                     </Image>
                 </Canvas>
-                <Button x:Name="btn_NewPart" Content="Nueva Partida" Height="76.062" Canvas.Left="61" Canvas.Top="167.062" Width="318" FontSize="36" Background="{x:Null}" Click="disparo_NuevaPartida" FontFamily="Deadpool Movie"/>
-                <Button x:Name="btn_AboutUs" Content="Sobre Nosotros" Height="76.062" Canvas.Left="141" Canvas.Top="551.667" Width="386.262" Click="AboutUs_Click" FontSize="40" Background="{x:Null}" FontFamily="Deadpool Movie"/>
-                <Button x:Name="btn_Continue" Content="Continuar" Height="76.062" Canvas.Left="147" Canvas.Top="432" Width="280" Click="button_Click" FontSize="40" Background="{x:Null}" FontFamily="Deadpool Movie"/>
-                <Button x:Name="btn_Sonido" Content="" Height="57" Canvas.Left="1297" Canvas.Top="622.729" Width="57" ToolTip="Activar sonido" Click="btn_Sonido_Click">
+                <Button x:Name="btn_NewPart" Content="Nueva Partida" Height="76.062" Canvas.Left="61" Canvas.Top="167.062" Width="318" FontSize="36" Background="#FFCDCCCC" Click="disparo_NuevaPartida" FontFamily="Deadpool Movie" ToolTip="Iniciar nueva partida" BorderThickness="1"/>
+                <Button x:Name="btn_AboutUs" Content="Sobre Nosotros" Height="76.062" Canvas.Left="141" Canvas.Top="551.667" Width="386.262" Click="AboutUs_Click" FontSize="40" Background="#FFB0B0B0" FontFamily="Deadpool Movie"/>
+                <Button x:Name="btn_Continue" Content="Continuar" Height="76.062" Canvas.Left="147" Canvas.Top="432" Width="280" Click="button_Click" FontSize="40" Background="#FFBDBDBD" FontFamily="Deadpool Movie"/>
+                <Button x:Name="btn_Sonido" Content="" Height="57" Canvas.Left="1297" Canvas.Top="622.729" Width="57" ToolTip="Activar sonido" Click="btn_Sonido_Click" BorderBrush="{x:Null}">
                     <Button.Background>
                         <ImageBrush ImageSource="mute.png"/>
                     </Button.Background>
@@ -1821,14 +1835,14 @@
                 <TextBox x:Name="txtNick" Height="54" Canvas.Left="819" TextWrapping="Wrap" Canvas.Top="55.062" Width="469" FontSize="36"/>
             </Canvas>
         </Grid>
-        <Border x:Name="br_pausa" BorderBrush="Black" BorderThickness="10" Grid.Column="1" Margin="462.179,84,417,157" Background="#FF700000">
+        <Border x:Name="br_pausa" BorderBrush="Black" BorderThickness="10" Grid.Column="1" Margin="462.179,84,417,157" Background="#FF700000" d:IsHidden="True">
             <Canvas x:Name="cv_brpausa" Margin="-10">
                 <Button x:Name="btn_volverInicio" Content="VOLVER A PÁGINA DE INICIO" Height="72" FontSize="24" FontFamily="Deadpool Movie" Canvas.Left="20" Canvas.Top="73.333" Width="383.667" Click="Volver_Inicio"/>
                 <Button x:Name="btn_musicaoff" Content="SILENCIAR MÚSICA" Height="63" Canvas.Left="20" Canvas.Top="206.5" Width="383.667" FontSize="20" FontFamily="Deadpool Movie" Click="btn_Sonido_Click"/>
                 <Button x:Name="btn_cancelar" Content="CANCELAR" Height="58.5" Canvas.Left="20" Canvas.Top="334" Width="383.667" FontSize="24" FontFamily="Deadpool Movie" Click="Cancelar_Option"/>
             </Canvas>
         </Border>
-        <Button x:Name="btn_Pausa" Content="PAUSE" Grid.Column="1" HorizontalAlignment="Right" Height="57.833" Margin="0,653.167,10,0" VerticalAlignment="Top" Width="63" FontSize="16" FontWeight="Bold" Foreground="White" VerticalContentAlignment="Bottom" MouseUp="abrir_menuPausa" Click="abrir_menuPausa">
+        <Button x:Name="btn_Pausa" Content="PAUSE" Grid.Column="1" HorizontalAlignment="Right" Height="57.833" Margin="0,653.167,10,0" VerticalAlignment="Top" Width="63" FontSize="16" FontWeight="Bold" Foreground="White" VerticalContentAlignment="Bottom" MouseUp="abrir_menuPausa" Click="abrir_menuPausa" BorderBrush="{x:Null}" d:IsHidden="True">
             <Button.Background>
                 <ImageBrush ImageSource="pause.png"/>
             </Button.Background>

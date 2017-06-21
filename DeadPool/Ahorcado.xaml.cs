@@ -74,9 +74,12 @@ namespace DeadPool
             this.t3 = t1;
 
         }
-       int seg = 0;
+        int seg = 0;
+
         int min = 0;
+
         int hora = 0;  
+
         private void reloj(object sender, EventArgs e)
         {
 
@@ -98,6 +101,7 @@ namespace DeadPool
 
 
         }
+
         private void cargarCancionAleatoriaJuego()
         {
             String[] canciones = {
@@ -245,6 +249,7 @@ namespace DeadPool
                         textBox.IsEnabled = false;
                         final = true;
                         button.Focus();
+                        button.ToolTip = "Cerrar juego";
                     }
 
                 }
@@ -346,8 +351,11 @@ namespace DeadPool
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             comer.IsHitTestVisible = true;
+            comer.ToolTip = "Dar de comer";
             dormir.IsHitTestVisible = true;
+            dormir.ToolTip = "Descansar";
             jugar.IsHitTestVisible = true;
+            jugar.ToolTip = "Jugar al ahorcado";
             if (musica)
             {
                 instrumental.Volume = 0.1;
@@ -362,14 +370,6 @@ namespace DeadPool
             t3.Start();
         }
 
-        /*private void Each_Tick(object o, EventArgs sender)
-        {
-            //lbl_SegundosPasados.Content = "Segundos pasados: " + segundos++.ToString("mm:ss");
-            lbl_SegundosPasados.Content = "Tiempo total" + hora.ToString().PadLeft(2, '0') + ":"
-                + min.ToString().PadLeft(2, '0') +
-                ":" + seg.ToString().PadLeft(2, '0');
-        }
-        */
         private int calculapuntos()
         {
             int puntos = 0;
